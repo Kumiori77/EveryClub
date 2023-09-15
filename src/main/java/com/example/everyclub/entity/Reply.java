@@ -1,9 +1,6 @@
 package com.example.everyclub.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -11,13 +8,19 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"post", "replyer"})
 public class Reply extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
     private String text;
+
+    @ManyToOne
+    private Post post;
+
+    @ManyToOne
+    private User replyer;
 
 
 }

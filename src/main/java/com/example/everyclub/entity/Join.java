@@ -1,9 +1,6 @@
 package com.example.everyclub.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -11,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"user", "Team"})
 public class Join  extends BaseEntity {
 
     @Id
@@ -19,5 +16,10 @@ public class Join  extends BaseEntity {
     private Long jno;
     private int grade;
 
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Team team;
 
 }
