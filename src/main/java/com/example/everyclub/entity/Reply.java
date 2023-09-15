@@ -2,6 +2,7 @@ package com.example.everyclub.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Controller;
 
 @Entity
 @Builder
@@ -9,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @ToString(exclude = {"post", "replyer"})
+@Controller
 public class Reply extends BaseEntity {
 
     @Id

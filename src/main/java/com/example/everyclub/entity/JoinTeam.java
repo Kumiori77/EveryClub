@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"user", "Team"})
-public class Join  extends BaseEntity {
+@ToString(exclude = {"user", "team"})
+public class JoinTeam extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
