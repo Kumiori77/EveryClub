@@ -17,10 +17,10 @@ public class Post extends BaseEntity {
     private String title;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User writer;
 
 

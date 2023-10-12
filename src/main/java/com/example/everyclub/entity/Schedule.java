@@ -19,7 +19,7 @@ public class Schedule extends BaseEntity {
     private LocalDateTime date;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
 
 }

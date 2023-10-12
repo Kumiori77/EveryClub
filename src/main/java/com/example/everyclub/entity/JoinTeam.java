@@ -16,10 +16,10 @@ public class JoinTeam extends BaseEntity {
     private Long jno;
     private int grade;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
 
 }

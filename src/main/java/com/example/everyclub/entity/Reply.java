@@ -18,10 +18,10 @@ public class Reply extends BaseEntity {
     private Long rno;
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User replyer;
 
 
