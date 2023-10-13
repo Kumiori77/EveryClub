@@ -24,7 +24,7 @@ public class JoinTeamRepositoyTest {
                     .email("user_"+i+"@kopo.com").build();
 
             Team team = Team.builder()
-                    .tno((long) i).build();
+                    .tno((long) (11 - i)).build();
 
             JoinTeam joinTeam = JoinTeam.builder()
                     .user(user)
@@ -35,6 +35,33 @@ public class JoinTeamRepositoyTest {
             joinTeamRepository.save(joinTeam);
         });
 
+    }
+
+    // 유저가 가입한 팀 목록 보기
+    @Test
+    public void getJoinedTeam() {
+
+        User user = User.builder()
+                .email("user_1@kopo.com").build();
+
+        Object[] result = joinTeamRepository.getTeamByEmail(user.getEmail());
+
+        for(Object entity : result) {
+            System.out.println(entity);
+        }
+    }
+
+    // 유저가 가입하지 않은 팀 목록 보기
+    @Test
+    public void getNotJoinedTeam() {
+        User user = User.builder()
+                .email("user_1@kopo.com").build();
+
+        Object[] result = joinTeamRepository.getTeamWithoutEmail(user.getEmail());
+
+        for(Object entity : result) {
+            System.out.println(entity);
+        }
     }
 
 }
