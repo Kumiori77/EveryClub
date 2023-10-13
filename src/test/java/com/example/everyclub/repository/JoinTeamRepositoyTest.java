@@ -22,14 +22,24 @@ public class JoinTeamRepositoyTest {
 
             User user = User.builder()
                     .email("user_"+i+"@kopo.com").build();
-
+// 처음 팀 생성
+//            Team team = Team.builder()
+//                    .tno((long) i).build();
+//
+//            JoinTeam joinTeam = JoinTeam.builder()
+//                    .user(user)
+//                    .team(team)
+//                    .grade(1)
+//                    .build();
+            
+            // 다른 팀에 가입
             Team team = Team.builder()
                     .tno((long) (11 - i)).build();
 
             JoinTeam joinTeam = JoinTeam.builder()
                     .user(user)
                     .team(team)
-                    .grade(1)
+                    .grade(0)
                     .build();
 
             joinTeamRepository.save(joinTeam);
