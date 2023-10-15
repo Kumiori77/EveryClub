@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -22,7 +24,8 @@ public class JoinTeamRepositoyTest {
 
             User user = User.builder()
                     .email("user_"+i+"@kopo.com").build();
-// 처음 팀 생성
+
+            // 처음 팀 생성
 //            Team team = Team.builder()
 //                    .tno((long) i).build();
 //
@@ -67,10 +70,10 @@ public class JoinTeamRepositoyTest {
         User user = User.builder()
                 .email("user_1@kopo.com").build();
 
-        Object[] result = joinTeamRepository.getTeamWithoutEmail(user.getEmail());
+        List<Object[]> result = joinTeamRepository.getTeamWithoutEmail(user.getEmail());
 
-        for(Object entity : result) {
-            System.out.println(entity);
+        for(Object[] entity : result) {
+            System.out.println(Arrays.toString(entity));
         }
     }
 
