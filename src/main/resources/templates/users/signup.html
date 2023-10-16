@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/base :: setContent(~{this :: content})}">
+  <th:block th:fragment="content">
+
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+
+          <!-- Signup Form -->
+          <form method="post">
+            <h2 class="text-center mb-4">Sign Up</h2>
+
+            <!-- Email Input -->
+            <div class="form-group">
+              <label for ="email">Email address</label>
+              <input type ="email" id ="email" name="email" class ="form-control"
+                     th:value="${dto != null} ? ${dto.email} : ''" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="form-group">
+              <label for ="password1">Password (8글자 이상) </label>
+              <input type ="password" id ="password1" name="password1" class="form-control" minlength="8"
+                     th:value="${dto != null} ? ${dto.password1} : ''"required>
+            </div>
+
+            <div class="form-group">
+              <label for ="password2">Password Check</label>
+              <input type ="password" id ="password2" name="password2" class="form-control" minlength="8" required>
+            </div>
+
+            <!-- Nickname Input -->
+            <div class = "form-group ">
+              <label for = "nickname">Nickname</label >
+              <input type = "text" id = "nickname" name="nickname" class="form-control"
+                     th:value="${dto != null} ? ${dto.nickname} : ''"required >
+            </div >
+
+            <!-- Submit Button -->
+            <br>
+            <button type = "submit" class = "btn btn-primary btn-block ">Submit</button >
+
+          </form>
+          <!-- End of Signup Form -->
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+
+      // 메시지에 따라 화면에 알림창 띄우기
+      $(document).ready(function() {
+        var msg = "[[ ${msg} ]]";
+        var error = "";
+
+        if (msg.includes("E")) {
+          error += "이미 가입한 이메일 입니다.\n\n";
+        }
+        if (msg.includes("N")) {
+          error += "이미 존재하는 닉네임입니다.\n\n";
+        }
+        if (msg.includes("P")) {
+          error += "비밀번호가 일치하지 않습니다.\n";
+        }
+
+        if (error != "") {
+          alert(error);
+        }
+      });
+    </script>
+
+
+  </th:block>
+</th:block>

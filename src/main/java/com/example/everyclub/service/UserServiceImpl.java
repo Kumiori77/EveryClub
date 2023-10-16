@@ -21,4 +21,41 @@ public class UserServiceImpl implements UserService {
 
         return false;
     }
+
+    // 회원가입 이메일 & 닉네임 중복 확인 메소드
+    @Override
+    public String checkOnly(UserDTO userDTO) {
+
+        String email = userDTO.getEmail();
+        String nickname = userDTO.getNickname();
+
+        int checkEmail = userRepository.countEmail(email);
+        int checkNickname = userRepository.countNickname(nickname);
+
+        String result = "";
+
+        if (checkEmail > 0) {
+            result += "E";
+        }
+        if (checkNickname > 0) {
+            result += "N";
+        }
+
+        return result;
+    }
+
+    // 비밀번호 확인에 똑같이 입력했는지 확인하는 메소드
+    @Override
+    public String checkPassword(UserDTO userDTO) {
+
+        String p1 = userDTO.getPassword1();
+        String p2 = userDTO.getPassword2();
+
+        if (p1.equals(p2)){
+            return "";
+        }
+        else {
+            return "P";
+        }
+    }
 }

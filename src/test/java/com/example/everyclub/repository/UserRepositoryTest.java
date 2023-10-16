@@ -26,4 +26,15 @@ public class UserRepositoryTest {
             userRepository.save(user);
         });
     }
+
+    @Test
+    public void checkCount() {
+        String email = "user_1@kopo.com";
+        String nickname = "USER_1";
+
+        int a = userRepository.countEmail(email);
+        int b = userRepository.countNickname(nickname);
+
+        System.out.println("email : " + a + "\nnickname : " + b);
+    }
 }
