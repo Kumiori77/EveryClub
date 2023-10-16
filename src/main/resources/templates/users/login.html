@@ -1,53 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<th:block th:replace="~{/layout/base :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
 
-</head>
-<body>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+                    <!-- Login Form -->
+                    <form method="post">
+                        <h2 class="text-center mb-4">Login</h2>
 
-            <!-- Login Form -->
-            <form method="post">
-                <h2 class="text-center mb-4">Login</h2>
+                        <!-- Email Input -->
+                        <div class="form-group">
+                            <label for="email">Email address:</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
 
-                <!-- Email Input -->
-                <div class="form-group">
-                    <label for="email">Email address:</label>
-                    <input type="email" id="email" class="form-control" required>
+                        <!-- Password Input -->
+                        <div class="form-group">
+                            <label for ="password">Password:</label>
+                            <input type ="password" id ="password" class ="form-control" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type = "submit "class = "btn btn-primary btn-block ">Submit</button>
+
+                    </form>
+                    <!-- End of Login Form -->
+
                 </div>
-
-                <!-- Password Input -->
-                <div class="form-group">
-                    <label for ="password">Password:</label>
-                    <input type ="password" id ="password" class ="form-control" required>
-                </div>
-
-                <!-- Submit Button -->
-                <button type = "submit "class = "btn btn-primary btn-block ">Submit</button>
-
-            </form>
-            <!-- End of Login Form -->
-
+            </div>
         </div>
-    </div>
-</div>
-
-<!-- Optional JavaScript; choose one of the two! -->
-
-<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-<script src = "https://code.jquery.com/jquery-3.5.1.slim.min.js "></script >
-<script src = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js "></script >
-
-
-
-</body >
-</html >
+    </th:block>
+</th:block>
+</html>

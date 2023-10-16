@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/users/")
+@RequestMapping("/club/")
 @Log4j2
 @RequiredArgsConstructor
-public class AuthenticController {
+public class ClubController {
 
-    @GetMapping("/login")
-    public void login() {
+    @GetMapping("/main")
+    public void mainPage() {
 
     }
 

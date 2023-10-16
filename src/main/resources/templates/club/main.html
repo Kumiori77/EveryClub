@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<th:block th:replace="~{/layout/base :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+
+        <div class="col-lg-6">
+            <div id="left-content">
+                <h1 class="mt-5">왼쪽이미지</h1>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div id="right-content">
+                <h1 class="mt-5">오른쪽이미지</h1>
+            </div>
+        </div>
+
+    </th:block>
+</th:block>
+
+</html>

@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/users/")
 @Log4j2
 @RequiredArgsConstructor
-public class MainController {
-    @GetMapping("/index")
-    public String index() {
-        return "index";
+public class UsersController {
+
+    @GetMapping("/login")
+    public void login() {
+
     }
+
 }
