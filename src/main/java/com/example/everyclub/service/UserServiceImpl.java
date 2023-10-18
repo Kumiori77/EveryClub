@@ -58,4 +58,12 @@ public class UserServiceImpl implements UserService {
             return "P";
         }
     }
+
+    // 회원가입
+    @Override
+    public void signup(UserDTO userDTO) {
+        User entity = dtoToEntity(userDTO);
+
+        userRepository.save(entity);
+    }
 }

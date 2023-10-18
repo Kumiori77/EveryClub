@@ -33,5 +33,8 @@ public interface UserService {
     // 비밀번호 확인에 똑같이 입력했는지 확인하는 메소드
     String checkPassword(UserDTO userDTO);
 
+    // 회원가입 메소드
+    void signup(UserDTO userDTO);
+
 
 }

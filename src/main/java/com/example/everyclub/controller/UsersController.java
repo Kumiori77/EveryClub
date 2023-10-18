@@ -40,8 +40,13 @@ public class UsersController {
 
         if (check.equals("")) {
             // 아무 문제 없으면 회원 가입 진행
-            return null;
-            // 여기부터 코딩 시작
+            userService.signup(userDTO);
+
+            // 회원가입 되었음을 알림
+            redirectAttributes.addFlashAttribute("msg", "signup");
+
+            // 로그인 화면으로 리다이렉트
+            return "redirect:login";
         }
         // 에러 내용을 포함해서 다시 표시
         redirectAttributes.addFlashAttribute("msg", check);

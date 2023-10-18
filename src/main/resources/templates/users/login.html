@@ -34,6 +34,20 @@
                 </div>
             </div>
         </div>
+
+
+        <script>
+
+            // 회원가입했으면 화면에 알림창 띄우기
+            $(document).ready(function() {
+                var msg = "[[ ${msg} ]]";
+
+                if (msg == "signup") {
+                    alert("회원가입 되었습니다.");
+                }
+            });
+        </script>
+
     </th:block>
 </th:block>
 </html>
