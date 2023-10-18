@@ -2,6 +2,8 @@ package com.example.everyclub.controller;
 
 import com.example.everyclub.dto.UserDTO;
 import com.example.everyclub.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -24,9 +26,39 @@ public class UsersController {
 
     }
 
+    @PostMapping("/login")
+    public String doLogin(UserDTO userDTO, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
+
+        if (userService.login(userDTO)) {
+            // 로그인 성공
+            // 새션 가져오기
+            HttpSession session = httpServletRequest.getSession();
+
+            // 세션에 유저 추가
+            session.setAttribute("user", userDTO);
+
+            // 세션 유효시간 지정 (30분)
+            session.setMaxInactiveInterval(1800);
+
+            // 매인화면으로 리다이렉트
+            return "redirect:/club/main";
+        }
+        else {
+            return "redirect:login";
+        }
+
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession(false);
+        session.invalidate(); // 세션 파기
+
+        return "redirect:/club/main";
+    }
+
     @GetMapping("/signup")
     public void signup() {
-
     }
 
     @PostMapping("/signup")

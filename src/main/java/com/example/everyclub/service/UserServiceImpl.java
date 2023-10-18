@@ -3,6 +3,7 @@ package com.example.everyclub.service;
 import com.example.everyclub.dto.UserDTO;
 import com.example.everyclub.entity.User;
 import com.example.everyclub.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,23 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Boolean checkUser(UserDTO userDTO) {
+    public Boolean login(UserDTO userDTO) {
+
+        String email = userDTO.getEmail();
+        String password = userDTO.getPassword1();
+
+        // 유저 확인
+        int cnt = userRepository.checkUser(email, password);
 
 
-        return false;
+        if (cnt == 1) {
+            //로그인 성공
+            return true;
+        }
+        else {
+            // 로그인 실패
+            return false;
+        }
     }
 
     // 회원가입 이메일 & 닉네임 중복 확인 메소드

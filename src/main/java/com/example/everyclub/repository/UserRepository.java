@@ -13,5 +13,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT COUNT(*) FROM User WHERE nickname = :nickname")
     int countNickname(@Param("nickname") String nickname);
 
+    @Query("SELECT COUNT(*) FROM User WHERE email = :email AND password = :password")
+    int checkUser(@Param("email")String email, @Param("password")String password);
+
 
 }
