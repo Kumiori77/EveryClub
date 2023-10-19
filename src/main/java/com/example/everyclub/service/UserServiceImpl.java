@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     public Boolean login(UserDTO userDTO) {
 
         String email = userDTO.getEmail();
-        String password = userDTO.getPassword1();
+        String password = userDTO.getPassword();
 
         // 유저 확인
         int cnt = userRepository.checkUser(email, password);
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String checkPassword(UserDTO userDTO) {
 
-        String p1 = userDTO.getPassword1();
+        String p1 = userDTO.getPassword();
         String p2 = userDTO.getPassword2();
 
         if (p1.equals(p2)){

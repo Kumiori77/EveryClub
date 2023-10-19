@@ -44,6 +44,7 @@ public class UsersController {
             return "redirect:/club/main";
         }
         else {
+            redirectAttributes.addFlashAttribute("msg", "login_fail");
             return "redirect:login";
         }
 

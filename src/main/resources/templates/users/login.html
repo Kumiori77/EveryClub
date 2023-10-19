@@ -20,8 +20,8 @@
 
                         <!-- Password Input -->
                         <div class="form-group">
-                            <label for ="password1">Password</label>
-                            <input type ="password" id ="password1" name="password1" class ="form-control" required>
+                            <label for ="password">Password</label>
+                            <input type ="password" id ="password" name="password" class ="form-control"  minlength="4" required>
                         </div>
 
                         <!-- Submit Button -->
@@ -38,12 +38,16 @@
 
         <script>
 
-            // 회원가입했으면 화면에 알림창 띄우기
             $(document).ready(function() {
                 var msg = "[[ ${msg} ]]";
 
                 if (msg == "signup") {
+                    // 회원가입했으면 화면에 알림창 띄우기
                     alert("회원가입 되었습니다.");
+                }
+                else if (msg == "login_fail") {
+                    // 로그인에 실패했으면 화면에 알림창 띄우기
+                    alert("이메일이나 비밀번호가 일치하지 않습니다.");
                 }
             });
         </script>
