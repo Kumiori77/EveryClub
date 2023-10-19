@@ -25,9 +25,15 @@ public class ClubController {
 
         if (userDTO != null) {
             System.out.println("로그인 됨");
+
+            // 모델에 메시지 담기
+            model.addAttribute("msg", "login");
         }
         else {
             System.out.println("로그인 안됨");
+
+            // 모델에 메시지 담기
+            model.addAttribute("msg", "not_login");
         }
 
 

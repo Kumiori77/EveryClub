@@ -8,7 +8,7 @@ public interface UserService {
     default User dtoToEntity(UserDTO userDTO) {
         User user = User.builder()
                 .email(userDTO.getEmail())
-                .password(userDTO.getPassword1())
+                .password(userDTO.getPassword())
                 .nickname(userDTO.getNickname())
                 .build();
 
@@ -18,7 +18,7 @@ public interface UserService {
     default UserDTO entityToDTO(User user) {
         UserDTO dto = UserDTO.builder()
                 .email(user.getEmail())
-                .password1(user.getPassword())
+                .password(user.getPassword())
                 .nickname(user.getNickname()).build();
 
         return dto;
