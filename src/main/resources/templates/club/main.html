@@ -5,18 +5,33 @@
 <th:block th:replace="~{/layout/base :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
 
-        <div class="col-lg-6">
-           <a>로그인</a>
-        </div>
 
-        <div class="col-lg-6">
-            <div id="left-content">
-                <h1 class="mt-5">왼쪽이미지</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex justify-content-end">
+                        <div th:if="${isUser=='false'}">
+                            <a href="/users/login" class="btn btn-primary mt-2">Login</a>&nbsp&nbsp
+                            <a href="/users/signup" class="btn btn-primary mt-2">Sign in</a>
+                        </div>
+                        <div th:if="${isUser=='true'}">
+                            <a href="/users/logout" class="btn btn-primary mt-2">Log out</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div id="right-content">
-                <h1 class="mt-5">오른쪽이미지</h1>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div id="left-content">
+                        <h1 class="mt-5">왼쪽이미지</h1>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div id="right-content">
+                        <h1 class="mt-5">오른쪽이미지</h1>
+                    </div>
+                </div>
             </div>
         </div>
 

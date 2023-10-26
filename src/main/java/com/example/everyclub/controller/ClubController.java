@@ -27,13 +27,13 @@ public class ClubController {
             System.out.println("로그인 됨");
 
             // 모델에 메시지 담기
-            model.addAttribute("msg", "login");
+            model.addAttribute("isUser", "true");
         }
         else {
             System.out.println("로그인 안됨");
 
             // 모델에 메시지 담기
-            model.addAttribute("msg", "not_login");
+            model.addAttribute("isUser", "false");
         }
 
 
