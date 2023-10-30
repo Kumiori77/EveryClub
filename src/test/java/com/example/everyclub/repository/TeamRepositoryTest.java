@@ -1,10 +1,13 @@
 package com.example.everyclub.repository;
 
 import com.example.everyclub.entity.Team;
+import com.example.everyclub.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -25,6 +28,29 @@ public class TeamRepositoryTest {
             teamRepository.save(team);
         });
 
+    }
+
+    @Test
+    public void getAllTeamTest() {
+
+        List<Object> result = teamRepository.getAllTeams();
+
+        for (Object team : result) {
+            System.out.println(team);
+        }
+
+    }
+
+    @Test
+    public void testGetTeamsNotJoined() {
+        User user = User.builder()
+                .email("user_1@kopo.com").build();
+
+        List<Object[]> result = teamRepository.getTeamNotJoined(user.getEmail());
+
+        for(Object team[] :  result) {
+            System.out.println(Arrays.toString(team));
+        }
     }
 
 }

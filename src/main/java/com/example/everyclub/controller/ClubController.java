@@ -1,6 +1,9 @@
 package com.example.everyclub.controller;
 
+import com.example.everyclub.dto.TeamDTO;
 import com.example.everyclub.dto.UserDTO;
+import com.example.everyclub.service.TeamService;
+import com.example.everyclub.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +13,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/club/")
 @Log4j2
 @RequiredArgsConstructor
 public class ClubController {
+
+    private final TeamService teamService;
 
     @GetMapping("/main")
     public void mainPage(HttpServletRequest httpServletRequest, Model model) {
@@ -26,14 +33,24 @@ public class ClubController {
         if (userDTO != null) {
             System.out.println("로그인 됨");
 
+            // 전달할 데이터
+            List<TeamDTO> recommendTeam = teamService.getRecommendTeamsForUser(userDTO.getEmail());
+            List<TeamDTO> myTeam = teamService.getJoinedTeams(userDTO.getEmail());
+
             // 모델에 메시지 담기
             model.addAttribute("isUser", "true");
+            model.addAttribute("recommendTeam", recommendTeam);
+            model.addAttribute("myTeam", myTeam);
         }
         else {
             System.out.println("로그인 안됨");
 
+            // 전달할 데이터
+            List<TeamDTO> recommendTeam = teamService.getSRecommendTeamsForAnyone();
+
             // 모델에 메시지 담기
             model.addAttribute("isUser", "false");
+            model.addAttribute("recommendTeam", recommendTeam);
         }
 
 

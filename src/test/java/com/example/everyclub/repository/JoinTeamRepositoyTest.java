@@ -57,23 +57,10 @@ public class JoinTeamRepositoyTest {
         User user = User.builder()
                 .email("user_1@kopo.com").build();
 
-        Object[] result = joinTeamRepository.getTeamByEmail(user.getEmail());
+        Object[] result = joinTeamRepository.getJoinedTeamByEmail(user.getEmail());
 
         for(Object entity : result) {
             System.out.println(entity);
-        }
-    }
-
-    // 유저가 가입하지 않은 팀 목록 보기
-    @Test
-    public void getNotJoinedTeam() {
-        User user = User.builder()
-                .email("user_1@kopo.com").build();
-
-        List<Object[]> result = joinTeamRepository.getTeamWithoutEmail(user.getEmail());
-
-        for(Object[] entity : result) {
-            System.out.println(Arrays.toString(entity));
         }
     }
 
