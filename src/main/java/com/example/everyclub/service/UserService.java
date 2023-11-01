@@ -27,6 +27,9 @@ public interface UserService {
     // 로그인 추상 메소드
     Boolean login(UserDTO userDTO);
 
+    // 로그인한 유저 정보 반환
+    UserDTO getUser(String email);
+
     // 회원가입 이메일 & 닉네임 중복 확인 메소드
     String checkOnly(UserDTO userDTO);
 

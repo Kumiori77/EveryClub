@@ -36,6 +36,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // 로그인 한 유저 DTO 반환
+    @Override
+    public UserDTO getUser(String email) {
+
+        User entity = userRepository.getUserByEmail(email);
+
+        UserDTO user = entityToDTO(entity);
+
+        return user;
+    }
+
     // 회원가입 이메일 & 닉네임 중복 확인 메소드
     @Override
     public String checkOnly(UserDTO userDTO) {

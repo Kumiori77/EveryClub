@@ -22,22 +22,25 @@ import java.util.List;
 public class ClubController {
 
     private final TeamService teamService;
+    private final UserService userService;
 
     @GetMapping("/main")
     public void mainPage(HttpServletRequest httpServletRequest, Model model) {
 
         // 로그인 여부 확인
         HttpSession session = httpServletRequest.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        String user = (String) session.getAttribute("user");
 
-        if (userDTO != null) {
+        if (user != null) {
             System.out.println("로그인 됨");
 
             // 전달할 데이터
-            List<TeamDTO> recommendTeam = teamService.getRecommendTeamsForUser(userDTO.getEmail());
-            List<TeamDTO> myTeam = teamService.getJoinedTeams(userDTO.getEmail());
+            List<TeamDTO> recommendTeam = teamService.getRecommendTeamsForUser(user);
+            List<TeamDTO> myTeam = teamService.getJoinedTeams(user);
+            UserDTO userDTO = userService.getUser(user);
 
             // 모델에 메시지 담기
+            model.addAttribute("user", userDTO);
             model.addAttribute("isUser", "true");
             model.addAttribute("recommendTeam", recommendTeam);
             model.addAttribute("myTeam", myTeam);

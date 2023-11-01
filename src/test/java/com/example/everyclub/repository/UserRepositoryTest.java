@@ -37,4 +37,13 @@ public class UserRepositoryTest {
 
         System.out.println("email : " + a + "\nnickname : " + b);
     }
+
+    @Test
+    public void testGetUser() {
+
+        User user = userRepository.getUserByEmail("user_1@kopo.com");
+
+        System.out.println(user.getNickname());
+
+    }
 }

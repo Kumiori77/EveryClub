@@ -16,6 +16,8 @@
                         </div>
                         <div th:if="${isUser=='true'}">
                             <a href="/users/logout" class="btn btn-primary mt-2">Log out</a>
+                            &nbsp&nbsp&nbsp&nbsp
+                            <b style="font-size: larger">[[ ${user.nickname} ]]</b>
                         </div>
                     </div>
                 </div>
@@ -24,10 +26,29 @@
             <br>
 
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button type="button" class="btn btn-success"><h1>&nbsp모임 생성&nbsp</h1></button>
+                <div class="col-lg-12">
+                    <div class="d-flex justify-content-center">
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-success" onclick="checkUser()">
+                                <h1>&nbsp모임 생성&nbsp</h1></button>
+                        </div>
+                        <div style="width: 200px"></div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-success" onclick="checkUser()">
+                                <h1> &nbsp모임 찾기&nbsp </h1></button>
+                        </div>
+
                     </div>
+                </div>
+            </div>
+
+            <hr><br>
+
+            <div class="row">
+                <div class="col-lg-6">
+
+
                     <div class="d-flex justify-content-center align-items-center">
                         <h1 class="mt-5">추천 모임</h1>
                     </div>
@@ -35,15 +56,13 @@
                     <div class="d-flex justify-content-center align-items-center"
                     th:each="recommend:${recommendTeam}">
                         <a href="#" class="text-decoration-none text-dark">
-                        <h2 class="mt-5">[[${recommend.teamName}]] ... Like : [[${recommend.likeTeam}]]</h2>
+                        <h2 class="mt-5">[[${recommend.teamName}]] ... &nbsp(Like : [[${recommend.likeTeam}]])</h2>
                         </a>
                     </div>
 
                 </div>
                 <div class="col-lg-6">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <button type="button" class="btn btn-success"><h1> &nbsp모임 찾기&nbsp </h1></button>
-                    </div>
+
                     <div class="d-flex justify-content-center align-items-center">
                         <h1 class="mt-5">내 모임</h1>
                     </div>
@@ -59,6 +78,28 @@
             </div>
 
         </div>
+
+
+
+        <script>
+
+            $(document).ready(function() {
+                var msg = "[[ ${msg} ]]";
+
+                if (msg == "logout") {
+                    // 회원가입했으면 화면에 알림창 띄우기
+                    alert("로그아웃 되었습니다.");
+                }
+            });
+
+            function checkUser() {
+                var isUser = "[[ ${isUser} ]]";
+
+                if (isUser == 'false') {
+                    alert("로그인 후에 이용해주세요");
+                }
+            }
+        </script>
 
     </th:block>
 </th:block>

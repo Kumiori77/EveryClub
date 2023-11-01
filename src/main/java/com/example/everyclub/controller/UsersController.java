@@ -35,7 +35,7 @@ public class UsersController {
             HttpSession session = httpServletRequest.getSession();
 
             // 세션에 유저 추가
-            session.setAttribute("user", userDTO);
+            session.setAttribute("user", userDTO.getEmail());
 
             // 세션 유효시간 지정 (30분)
             session.setMaxInactiveInterval(1800);
@@ -51,9 +51,11 @@ public class UsersController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest httpServletRequest) {
+    public String logout(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
         HttpSession session = httpServletRequest.getSession(false);
         session.invalidate(); // 세션 파기
+
+        redirectAttributes.addFlashAttribute("msg", "logout");
 
         return "redirect:/club/main";
     }
