@@ -31,20 +31,30 @@
                     <div class="d-flex justify-content-center align-items-center">
                         <h1 class="mt-5">추천 모임</h1>
                     </div>
+
+                    <div class="d-flex justify-content-center align-items-center"
+                    th:each="recommend:${recommendTeam}">
+                        <a href="#" class="text-decoration-none text-dark">
+                        <h2 class="mt-5">[[${recommend.teamName}]] ... Like : [[${recommend.likeTeam}]]</h2>
+                        </a>
+                    </div>
+
                 </div>
                 <div class="col-lg-6">
                     <div class="d-flex justify-content-center align-items-center">
                         <button type="button" class="btn btn-success"><h1> &nbsp모임 찾기&nbsp </h1></button>
                     </div>
-                    <div>
+                    <div class="d-flex justify-content-center align-items-center">
                         <h1 class="mt-5">내 모임</h1>
                     </div>
-                    <div>
-                        <h1 class="mt-5">오른쪽이미지</h1>
+
+                    <div th:if="${isUser=='true'}">
+                        <div class="d-flex justify-content-center align-items-center"
+                                th:each="my:${myTeam}">
+                            <h2 class="mt-5">[[${my.teamName}]]</h2>
+                        </div>
                     </div>
-                    <div>
-                        <h1 class="mt-5">오른쪽이미지</h1>
-                    </div>
+
                 </div>
             </div>
 
