@@ -22,6 +22,7 @@ public class TeamRepositoryTest {
         IntStream.rangeClosed(1, 10).forEach(i -> {
             Team team = Team.builder()
                     .teamName("Team_" + i)
+                    .description("This Team is very Good Team")
                     .likeTeam((long) 0)
                     .build();
 

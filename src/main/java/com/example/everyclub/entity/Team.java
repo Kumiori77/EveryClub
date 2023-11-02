@@ -18,6 +18,7 @@ public class Team extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tno;
     private String teamName;
+    private String description;
     private Long likeTeam;
 
 }
