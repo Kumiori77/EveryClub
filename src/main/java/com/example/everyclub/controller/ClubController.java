@@ -11,12 +11,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/club/")
+@RequestMapping("/club")
 @Log4j2
 @RequiredArgsConstructor
 public class ClubController {
@@ -59,4 +60,14 @@ public class ClubController {
 
     }
 
+    @GetMapping("/team/{tno}")
+    public String team(@PathVariable("tno") Long tno) {
+
+        return "team";
+    }
+
+//    @GetMapping("/team")
+//    public void team() {
+//
+//   }
 }
