@@ -11,6 +11,7 @@ public interface TeamService {
         TeamDTO dto = TeamDTO.builder()
                 .tno(team.getTno())
                 .teamName(team.getTeamName())
+                .description(team.getDescription())
                 .likeTeam(team.getLikeTeam()).build();
 
         return dto;
@@ -20,6 +21,7 @@ public interface TeamService {
         Team entity = Team.builder()
                 .tno(teamDTO.getTno())
                 .teamName(teamDTO.getTeamName())
+                .description(teamDTO.getDescription())
                 .likeTeam(teamDTO.getLikeTeam()).build();
 
         return entity;
@@ -33,4 +35,6 @@ public interface TeamService {
 
     // 추천 팀 목록 (비회원)
     List<TeamDTO> getSRecommendTeamsForAnyone();
+
+    TeamDTO getTeamByTno(Long tno);
 }

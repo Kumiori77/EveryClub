@@ -9,15 +9,19 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="d-flex justify-content-end">
-                        <div th:if="${isUser=='false'}">
-                            <a href="/users/login" class="btn btn-primary mt-2">Log in</a>&nbsp&nbsp
-                            <a href="/users/signup" class="btn btn-primary mt-2">Sign in</a>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-success" onclick="checkUser()">
+                                &nbsp가입&nbsp</button>
                         </div>
-                        <div th:if="${isUser=='true'}">
-                            <b style="font-size: larger">[[ ${user.nickname} ]]</b>
-                            &nbsp&nbsp&nbsp&nbsp
-                            <a href="/users/logout" class="btn btn-primary mt-2">Log out</a>
-                        </div>
+            <!--            <div style="width: 200px"></div>-->
+            <!--            <div class="d-flex justify-content-center align-items-center">-->
+            <!--                <button type="button" class="btn btn-success" onclick="checkUser()">-->
+            <!--                    <h3> &nbsp설정&nbsp </h3></button>-->
+            <!--            </div>-->
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <b style="font-size: larger">[[ ${user.nickname} ]]</b>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <a href="/users/logout" class="btn btn-primary mt-2">Log out</a>
                     </div>
                 </div>
             </div>
@@ -28,15 +32,7 @@
                 <div class="col-lg-12">
                     <div class="d-flex justify-content-center">
 
-                        <div class="d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-success" onclick="checkUser()">
-                                <h3>&nbsp모임 가입&nbsp</h3></button>
-                        </div>
-                        <div style="width: 200px"></div>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-success" onclick="checkUser()">
-                                <h3> &nbsp설정&nbsp </h3></button>
-                        </div>
+                        <h1>[[ ${team.teamName} ]]</h1>
 
                     </div>
                 </div>
@@ -45,21 +41,26 @@
             <hr><br>
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
 
 
-                    <div class="d-flex justify-content-center align-items-center">
-                        <h1 class="mt-5">모임 소개</h1>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <h1 class="mt-5">모임 소개</h1><br>
+                        <h3>[[ ${team.description} ]]</h3>
                     </div>
-
-                    <div class="d-flex justify-content-center align-items-center">
+                    <br>
+                    <hr>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
                         <h1>일정표</h1>
+                        <div th:each="schedule:${scheduleList}">
+                            <h6>[[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h6>
+                        </div>
                     </div>
 
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-8">
 
-                    <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
                         <h1 class="mt-5">게시판</h1>
                     </div>
 

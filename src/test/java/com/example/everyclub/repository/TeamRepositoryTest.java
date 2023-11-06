@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -52,6 +53,15 @@ public class TeamRepositoryTest {
         for(Object team[] :  result) {
             System.out.println(Arrays.toString(team));
         }
+    }
+
+    @Test
+    public void testGetTeamByTno() {
+
+        Optional<Team> team = teamRepository.findById(1L);
+
+        System.out.println(team.get().getDescription());
+
     }
 
 }

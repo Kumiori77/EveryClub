@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class TeamDTO {
     private Long tno;
     private String teamName;
+    private String description;
     private Long likeTeam;
 }

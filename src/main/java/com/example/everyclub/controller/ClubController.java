@@ -1,7 +1,9 @@
 package com.example.everyclub.controller;
 
+import com.example.everyclub.dto.ScheduleDTO;
 import com.example.everyclub.dto.TeamDTO;
 import com.example.everyclub.dto.UserDTO;
+import com.example.everyclub.service.ScheduleService;
 import com.example.everyclub.service.TeamService;
 import com.example.everyclub.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ public class ClubController {
 
     private final TeamService teamService;
     private final UserService userService;
+    private final ScheduleService scheduleService;
 
     @GetMapping("/main")
     public void mainPage(HttpServletRequest httpServletRequest, Model model) {
@@ -61,13 +64,30 @@ public class ClubController {
     }
 
     @GetMapping("/team/{tno}")
-    public String team(@PathVariable("tno") Long tno) {
+    public String team(@PathVariable("tno") Long tno,
+                       HttpServletRequest httpServletRequest, Model model) {
 
-        return "team";
+        // 로그인 여부 확인
+        HttpSession session = httpServletRequest.getSession();
+        String user = (String) session.getAttribute("user");
+
+        if (user == null) {
+            // 메인페이지로 이동해서 로그인 하지 않으면 해당 페이지에 접근하지 못하게 하기
+            return "redirect:/club/main";
+        }
+
+        // 전달할 데이터
+        UserDTO userDTO = userService.getUser(user);
+        TeamDTO teamDTO = teamService.getTeamByTno(tno);
+        List<ScheduleDTO> scheduleList = scheduleService.getScheduleList(teamDTO);
+
+        // 모델에 메시지 담기
+        model.addAttribute("user", userDTO);
+        model.addAttribute("team", teamDTO);
+        model.addAttribute("scheduleList", scheduleList);
+
+        return "club/team";
     }
 
-//    @GetMapping("/team")
-//    public void team() {
-//
-//   }
+
 }

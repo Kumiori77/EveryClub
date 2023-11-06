@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -34,6 +35,20 @@ public class ScheduleRepositoyTest {
 
             scheduleRepository.save(schedule);
         });
+    }
+
+    @Test
+    public void testGetScheduleByTeam() {// 예 수정
+
+        Team team = Team.builder()
+                .tno(2L).build();
+
+        List<Object> result = scheduleRepository.getScheduleByTeam(team);
+
+        for (Object obj : result) {
+            System.out.println(obj);
+        }
+
     }
 
 }

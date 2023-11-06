@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Log4j2
@@ -69,5 +70,12 @@ public class TeamServiceImpl implements TeamService{
         }
 
         return allTeams;
+    }
+
+    @Override
+    public TeamDTO getTeamByTno(Long tno) {
+        Optional<Team> team = teamRepository.findById(tno);
+
+        return entityToDTO(team.get());
     }
 }
