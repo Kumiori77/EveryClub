@@ -3,6 +3,7 @@ package com.example.everyclub.controller;
 import com.example.everyclub.dto.ScheduleDTO;
 import com.example.everyclub.dto.TeamDTO;
 import com.example.everyclub.dto.UserDTO;
+import com.example.everyclub.repository.JoinTeamRepository;
 import com.example.everyclub.service.ScheduleService;
 import com.example.everyclub.service.TeamService;
 import com.example.everyclub.service.UserService;
@@ -27,6 +28,7 @@ public class ClubController {
     private final TeamService teamService;
     private final UserService userService;
     private final ScheduleService scheduleService;
+    private final JoinTeamRepository joinTeamRepository;
 
     @GetMapping("/main")
     public void mainPage(HttpServletRequest httpServletRequest, Model model) {
@@ -80,6 +82,26 @@ public class ClubController {
         UserDTO userDTO = userService.getUser(user);
         TeamDTO teamDTO = teamService.getTeamByTno(tno);
         List<ScheduleDTO> scheduleList = scheduleService.getScheduleList(teamDTO);
+
+        // 모임 가입 여부
+        int isJoined = joinTeamRepository.isJoined(userService.dtoToEntity(userDTO), teamService.dtoToEntity(teamDTO));
+        switch (isJoined){
+            case 0: model.addAttribute("isJoined", false);
+            break;
+            default:
+                model.addAttribute("isJoined", true);
+
+                // 모임장 여부
+                int isLeader = joinTeamRepository.isLeader(userService.dtoToEntity(userDTO), teamService.dtoToEntity(teamDTO));
+                if (isLeader == 1) {
+                    model.addAttribute("isLeader", true);
+                }
+                else {
+                    model.addAttribute("isLeader", false);
+                }
+
+                break;
+        }
 
         // 모델에 메시지 담기
         model.addAttribute("user", userDTO);

@@ -64,4 +64,35 @@ public class JoinTeamRepositoyTest {
         }
     }
 
+    @Test
+    public void testIsJoined() {
+
+        User user1 = User.builder()
+                .email("user_1@kopo.com").build();
+        User user2 = User.builder()
+                .email("user_2@kopo.com").build();
+
+        Team team = Team.builder()
+                .tno(1L).build();
+
+        System.out.println(joinTeamRepository.isJoined(user1, team));
+        System.out.println(joinTeamRepository.isJoined(user2, team));
+
+    }
+
+    @Test
+    public void testIsLeader() {
+
+        User user = User.builder()
+                .email("user_1@kopo.com").build();
+
+        Team team1 = Team.builder()
+                .tno(1L).build();
+        Team team2 = Team.builder()
+                .tno(10L).build();
+
+        System.out.println(joinTeamRepository.isLeader(user, team1));
+        System.out.println(joinTeamRepository.isLeader(user, team2));
+    }
+
 }
