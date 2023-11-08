@@ -54,8 +54,10 @@
                     <hr>
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <h1>일정표</h1>
-                        <div th:each="schedule:${scheduleList}">
-                            <h6>[[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h6>
+                        <div class="schedule" th:each="schedule:${scheduleList}">
+                            <h6 th:attr="title=${schedule.title},content=${schedule.content},date=${schedule.date}"
+                                th:onclick="clickSchedule(this.getAttribute('title'), this.getAttribute('content'), this.getAttribute('date'))">
+                                [[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h6>
                         </div>
                     </div>
 
@@ -73,7 +75,58 @@
 
         </div>
 
+        <!--   모달      -->
+
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modal_date">Modal body text goes here.</p>
+                        <p id="modal_content">Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </th:block>
 </th:block>
+
+<script>
+
+    function clickSchedule(title, content, date) {
+
+        var modal_title = document.getElementById('modal_title');
+        modal_title.innerHTML = title;
+        var modal_date = document.getElementById('modal_date');
+        modal_date.innerHTML = date;
+        var modal_content = document.getElementById('modal_content');
+        modal_content.innerHTML = content;
+
+        var modal = $(".modal");
+        modal.modal("show");
+    }
+
+    $(document).ready(function () {
+        var modal = $(".modal");
+
+        // $(".schedule").click(function () {
+        //     modal.modal("show");
+        // });
+
+
+    })
+
+
+
+</script>
 
 </html>
