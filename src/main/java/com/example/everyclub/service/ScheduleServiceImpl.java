@@ -28,4 +28,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         return result.stream().map(x -> entityToDTO((Schedule) x)).collect(Collectors.toList());
     }
+
+    @Override
+    public void delete(ScheduleDTO scheduleDTO) {
+        // 여기 구현
+    }
 }

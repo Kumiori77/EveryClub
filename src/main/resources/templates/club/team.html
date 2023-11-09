@@ -55,9 +55,11 @@
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <h1>일정표</h1>
                         <div class="schedule" th:each="schedule:${scheduleList}">
-                            <h6 th:attr="title=${schedule.title},content=${schedule.content},date=${schedule.date}"
-                                th:onclick="clickSchedule(this.getAttribute('title'), this.getAttribute('content'), this.getAttribute('date'))">
-                                [[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h6>
+                            <h5 th:attr="sno=${schedule.sno}, title=${schedule.title},content=${schedule.content},
+                                date=${#temporals.format(schedule.date, 'yyyy/MM/dd')}"
+                                th:onclick="clickSchedule(this.getAttribute('sno'), this.getAttribute('title'),
+                                this.getAttribute('content'), this.getAttribute('date'))">
+                                [[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h5>
                         </div>
                     </div>
 
@@ -75,6 +77,9 @@
 
         </div>
 
+
+
+
         <!--   모달      -->
 
         <div class="modal" tabindex="-1">
@@ -85,12 +90,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p id="modal_date">Modal body text goes here.</p>
-                        <p id="modal_content">Modal body text goes here.</p>
+                        <form  id="myForm">
+                        <input type="hidden" id="modal_sno">
+                        <label>날짜</label><input type="date" class="form-control" name="modal_date" id="modal_date"><br>
+                        <label>내용</label>
+<!--                        <input type="text" class="form-control" name="modal_content" id="modal_content">-->
+                        <textarea class="form-control" name="modal_content" rows="5" id="modal_content"></textarea>
+                        </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" th:if="${isLeader}" onclick="submitForm('/schedule/modify')">수정</button>
+                        <button type="button" class="btn btn-danger" th:if="${isLeader}" onclick="submitForm('/schedule/delete')">삭제</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -102,17 +113,52 @@
 
 <script>
 
-    function clickSchedule(title, content, date) {
+    // 스케줄 클릭시 모달창을 띄우는 함수
+    function clickSchedule(sno, title, content, date) {
+
+        var isJoined = [[${isJoined}]];
+        var isLeader = [[${isLeader}]];
+
+        if (!isJoined) {
+            return null;
+        }
 
         var modal_title = document.getElementById('modal_title');
         modal_title.innerHTML = title;
+        var modal_sno = document.getElementById('modal_sno');
+        modal_sno.value = sno;
         var modal_date = document.getElementById('modal_date');
-        modal_date.innerHTML = date;
+        modal_date.value = getStringDate(date);
         var modal_content = document.getElementById('modal_content');
-        modal_content.innerHTML = content;
+        modal_content.value = content;
+
+        if (!isLeader) { // 리더일 때만 편지 허용
+            modal_date.readOnly = true;
+            modal_content.readOnly = true;
+        }
 
         var modal = $(".modal");
         modal.modal("show");
+    }
+
+    // 날짜를 문자열로 변환하는 함수
+    function getStringDate(dateStr) {
+        var date = new Date(dateStr);
+        var y = date.getFullYear();
+        var m = String(date.getMonth() + 1).padStart(2, '0');
+        var d = String(date.getDate()).padStart(2, '0');
+        var stringDate = y + "-" + m + "-" + d;
+        console.log(stringDate);
+        return stringDate;
+    }
+
+    // 서로 다른 링크로 폼 보내기
+    function submitForm(url) {
+        var form = document.getElementById("myForm");
+        var formData = new FormData(form);
+        var queryString = new URLSearchParams(formData).toString();
+        var link = url + "?" + queryString;
+        window.location.href = link;
     }
 
     $(document).ready(function () {

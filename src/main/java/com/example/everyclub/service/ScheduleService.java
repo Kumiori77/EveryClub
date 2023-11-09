@@ -30,4 +30,6 @@ public interface ScheduleService {
     }
 
     List<ScheduleDTO> getScheduleList(TeamDTO teamDTO);
+
+    void delete(ScheduleDTO scheduleDTO);
 }
