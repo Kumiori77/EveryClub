@@ -19,5 +19,6 @@ public class ScheduleDTO {
     private String title;
     private LocalDateTime date;
     private String content;
+    private Long tno;
 
 }

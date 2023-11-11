@@ -30,7 +30,15 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public void delete(ScheduleDTO scheduleDTO) {
-        // 여기 구현
+    public void delete(Long sno) {
+
+        scheduleRepository.deleteById(sno);
+
+    }
+
+    @Override
+    public void update(ScheduleDTO scheduleDTO) {
+        Schedule schedule = dtoToEntity(scheduleDTO);
+        scheduleRepository.save(schedule);
     }
 }
