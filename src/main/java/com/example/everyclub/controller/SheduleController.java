@@ -1,6 +1,7 @@
 package com.example.everyclub.controller;
 
 import com.example.everyclub.dto.ScheduleDTO;
+import com.example.everyclub.entity.Schedule;
 import com.example.everyclub.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -25,18 +26,8 @@ public class SheduleController {
     public String modyfy(@RequestParam("title")String title, @RequestParam("sno")Long sno, @RequestParam("tno")Long tno,
                          @RequestParam("date")String date, @RequestParam("content")String content) {
 
-        LocalDate localDate = LocalDate.parse(date);
-        LocalDateTime localDateTime = localDate.atTime(LocalTime.MIN);
+        ScheduleDTO scheduleDTO = mkDTO(title, sno, tno, content, date);
 
-
-        ScheduleDTO scheduleDTO = ScheduleDTO.builder()
-                .sno(sno)
-                .title(title)
-                .content(content)
-                .date(localDateTime)
-                .tno(tno).build();
-
-//        System.out.println(scheduleDTO.getTitle());
         scheduleService.update(scheduleDTO);
 
         return "redirect:/club/team/" + scheduleDTO.getTno();
@@ -48,6 +39,32 @@ public class SheduleController {
         scheduleService.delete(sno);
 
         return "redirect:/club/team/" + tno;
+    }
+
+    @GetMapping("/upload")
+    public String upload(@RequestParam("title")String title, @RequestParam("tno")Long tno,
+                         @RequestParam("date")String date, @RequestParam("content")String content) {
+
+        ScheduleDTO scheduleDTO = mkDTO(title, null, tno, content, date);
+
+        scheduleService.upload(scheduleDTO);
+
+
+        return "redirect:/club/team/" + tno;
+    }
+
+    private ScheduleDTO mkDTO(String title, Long sno, Long tno, String content, String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        LocalDateTime localDateTime = localDate.atTime(LocalTime.MIN);
+
+        ScheduleDTO scheduleDTO = ScheduleDTO.builder()
+                .sno(sno)
+                .title(title)
+                .content(content)
+                .date(localDateTime)
+                .tno(tno).build();
+
+        return scheduleDTO;
     }
 
 }

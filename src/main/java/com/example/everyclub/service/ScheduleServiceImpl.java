@@ -41,4 +41,10 @@ public class ScheduleServiceImpl implements ScheduleService{
         Schedule schedule = dtoToEntity(scheduleDTO);
         scheduleRepository.save(schedule);
     }
+
+    @Override
+    public void upload(ScheduleDTO scheduleDTO) {
+        Schedule schedule = dtoToEntity(scheduleDTO);
+        scheduleRepository.save(schedule);
+    }
 }

@@ -61,6 +61,10 @@
                                 this.getAttribute('content'), this.getAttribute('date'), this.getAttribute('tno'))">
                                 [[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h5>
                         </div>
+                        <br>
+                        <button class="btn btn-success" style="width: 200px"
+                                th:if="${isLeader}" onclick="uploadSchedule()">스케줄 입력</button>
+                        <div style="height:100px"></div>
                     </div>
 
                 </div>
@@ -90,18 +94,23 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form  id="myForm">
-                        <input type="hidden" id="modal_title2" name="title">
+                        <form id="myForm">
+                        <label id="title_label"></label>
+                        <input type="hidden" id="modal_title2" class="form-control" name="title" required><br>
                         <input type="hidden" id="modal_sno" name="sno">
                         <input type="hidden" id="modal_tno" name="tno">
-                        <label>날짜</label><input type="date" class="form-control" name="date" id="modal_date"><br>
+                        <label>날짜</label><input type="date" class="form-control" name="date" id="modal_date" required><br>
                         <label>내용</label>
-                        <textarea class="form-control" name="content" rows="5" id="modal_content"></textarea>
+                        <textarea class="form-control" name="content" rows="5" id="modal_content" required></textarea>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" th:if="${isLeader}" onclick="submitForm('/schedule/modify')">수정</button>
-                        <button type="button" class="btn btn-danger" th:if="${isLeader}" onclick="submitForm('/schedule/delete')">삭제</button>
+                        <button type="button" class="btn btn-warning" id="btn_modify"
+                                th:if="${isLeader}" onclick="submitForm('/schedule/modify')">수정</button>
+                        <button type="button" class="btn btn-danger" id="btn_delete"
+                                th:if="${isLeader}" onclick="submitForm('/schedule/delete')">삭제</button>
+                        <button type="button" class="btn btn-primary" id="btn_upload"
+                                th:if="${isLeader}" onclick="submitForm('/schedule/upload')">등록</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                     </div>
                 </div>
@@ -124,6 +133,11 @@
             return null;
         }
 
+        var title_label = document.getElementById("title_label")
+        title_label.innerHTML = "";
+        var input_title = document.getElementById("modal_title2")
+        input_title.type = "hidden";
+
         var modal_title = document.getElementById('modal_title');
         var modal_title2 = document.getElementById('modal_title2');
         modal_title.innerHTML = title;
@@ -134,13 +148,23 @@
         modal_tno.value = tno;
         var modal_date = document.getElementById('modal_date');
         modal_date.value = getStringDate(date);
-        // modal_date.value = date;
         var modal_content = document.getElementById('modal_content');
         modal_content.value = content;
+
+
 
         if (!isLeader) { // 리더일 때만 편지 허용
             modal_date.readOnly = true;
             modal_content.readOnly = true;
+        }
+        else {
+            // 리더일 때만 버튼 표시
+            var btn_modify = document.getElementById("btn_modify")
+            btn_modify.style.display = "block";
+            var btn_delete = document.getElementById("btn_delete")
+            btn_delete.style.display = "block";
+            var btn_upload = document.getElementById("btn_upload")
+            btn_upload.style.display = "none";
         }
 
         var modal = $(".modal");
@@ -160,12 +184,49 @@
 
     // 서로 다른 링크로 폼 보내기
     function submitForm(url) {
+
+        var title = document.getElementById("modal_title2").value;
+        var date = document.getElementById("modal_date").value;
+        var content = document.getElementById("modal_content").value;
+
+        if (title === '' || date === '' || content === '') {
+            alert("모든 항목을 다 입력해주세요");
+            return false;
+        }
+
         var form = document.getElementById("myForm");
         var formData = new FormData(form);
         var queryString = new URLSearchParams(formData).toString();
         var link = url + "?" + queryString;
         console.log(link);
         window.location.href = link;
+    }
+
+    // 스케줄 등록 함수
+    function uploadSchedule() {
+
+        var modal_tno = document.getElementById('modal_tno');
+        modal_tno.value = [[${team.tno}]];
+
+        var modal_title = document.getElementById("modal_title")
+        modal_title.innerHTML = "스케줄 등록";
+
+        var title_label = document.getElementById("title_label")
+        title_label.innerHTML = "제목";
+
+        var input_title = document.getElementById("modal_title2")
+        input_title.type = "text";
+
+        // 버튼 보이기 여부 설정
+        var btn_modify = document.getElementById("btn_modify")
+        btn_modify.style.display = "none";
+        var btn_delete = document.getElementById("btn_delete")
+        btn_delete.style.display = "none";
+        var btn_upload = document.getElementById("btn_upload")
+        btn_upload.style.display = "block";
+
+        var modal = $(".modal");
+        modal.modal("show");
     }
 
     $(document).ready(function () {

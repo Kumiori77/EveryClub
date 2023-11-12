@@ -41,4 +41,6 @@ public interface ScheduleService {
     void delete(Long sno);
 
     void update(ScheduleDTO scheduleDTO);
+
+    void upload(ScheduleDTO scheduleDTO);
 }
