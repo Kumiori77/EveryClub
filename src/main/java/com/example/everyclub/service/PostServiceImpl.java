@@ -22,11 +22,11 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    public PageResultDTO<PostDTO, Post> getList(PageRequestDTO pageRequestDTO) {
+    public PageResultDTO<PostDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
 
-        Function<Post, PostDTO> fn = (en -> entityToDTO(en);
+        Function<Object[], PostDTO> fn = (en -> entityToDTO(en));
 
-        Page<Post> result = postRepository.getPosts(
+        Page<Object[]> result = postRepository.getPosts(
                 pageRequestDTO.getPageable(Sort.by("bno").descending()));
 
 

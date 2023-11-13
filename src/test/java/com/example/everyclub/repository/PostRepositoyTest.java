@@ -49,11 +49,14 @@ public class PostRepositoyTest {
 
         Pageable pageable = PageRequest.of(1, 10, Sort.by("pno").descending());
 
-        Page<Object> result = postRepository.getPosts(pageable);
+        Page<Object[]> result = postRepository.getPosts(pageable);
 
-        for (Object obj : result) {
-            Post post = (Post) obj;
+        for (Object obj[]: result) {
+            User user = (User) obj[1];
+            Post post = (Post) obj[0];
             System.out.println(post.getTitle());
+            System.out.println(user.getEmail());
+            System.out.println("______________________");
         }
 
     }

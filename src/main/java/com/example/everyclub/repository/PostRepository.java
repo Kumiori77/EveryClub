@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("SELECT p FROM Post p")
-    public Page<Post> getPosts(Pageable pageable);
+    @Query("SELECT p, u FROM Post p LEFT JOIN User u ON u.email = p.writer")
+    public Page<Object[]> getPosts(Pageable pageable);
 
 }
