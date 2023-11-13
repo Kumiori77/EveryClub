@@ -6,6 +6,10 @@ import com.example.everyclub.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.stream.IntStream;
 
@@ -37,6 +41,20 @@ public class PostRepositoyTest {
 
             postRepository.save(post);
         });
+
+    }
+
+    @Test
+    public void testGetPosts() {
+
+        Pageable pageable = PageRequest.of(1, 10, Sort.by("pno").descending());
+
+        Page<Object> result = postRepository.getPosts(pageable);
+
+        for (Object obj : result) {
+            Post post = (Post) obj;
+            System.out.println(post.getTitle());
+        }
 
     }
 
