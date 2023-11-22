@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.IntStream;
 
@@ -44,18 +45,24 @@ public class PostRepositoyTest {
 
     }
 
+    @Transactional
     @Test
     public void testGetPosts() {
 
-        Pageable pageable = PageRequest.of(1, 10, Sort.by("pno").descending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("pno").descending());
+        Team team = Team.builder().tno(1L).build();
 
-        Page<Object[]> result = postRepository.getPosts(pageable);
+        Page<Object[]> result = postRepository.getPosts(pageable, 1L);
+        System.out.println("_________________________________");
 
         for (Object obj[]: result) {
             User user = (User) obj[1];
             Post post = (Post) obj[0];
+            Long rplCnt = (Long) obj[2];
             System.out.println(post.getTitle());
             System.out.println(user.getEmail());
+            System.out.println(rplCnt);
+//            System.out.println(obj.toString());
             System.out.println("______________________");
         }
 

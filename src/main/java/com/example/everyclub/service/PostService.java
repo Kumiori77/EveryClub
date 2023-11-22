@@ -23,17 +23,17 @@ public interface PostService {
         return post;
     }
 
-    default PostDTO entityToDTO(Object[] objects) {
-        Post post = (Post) objects[0];
-        User user = (User) objects[1];
+    default PostDTO entityToDTO(Post post, User user, Long replyCnt) {
         PostDTO postDTO = PostDTO.builder()
                 .pno(post.getPno())
                 .title(post.getTitle())
                 .content(post.getContent())
                 .tno(post.getTeam().getTno())
-                .writer(user.getEmail()).build();
+                .writer(user.getEmail())
+                .nickname(user.getNickname())
+                .replyCnt(replyCnt.intValue()).build();
         return postDTO;
     }
 
-    PageResultDTO<PostDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
+    PageResultDTO<PostDTO, Object[]> getList(PageRequestDTO pageRequestDTO, Long tno);
 }

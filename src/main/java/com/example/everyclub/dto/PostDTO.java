@@ -20,4 +20,6 @@ public class PostDTO {
     private String content;
     private Long tno;
     private String writer;
+    private String nickname;
+    private int replyCnt;
 }
