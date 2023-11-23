@@ -53,16 +53,15 @@ public class PageResultDTO<DTO, EN> {
         this.size = pageable.getPageSize();
 
         // 임시 마지막 체이지
-        int tmpEnd = (int)(Math.ceil(page / 10.0)) * 10;
+        int tmpEnd = (int)(Math.ceil(page / 5.0)) * 5;
 
-        this.start = tmpEnd - 9; // 시작 페이지
+        this.start = tmpEnd - 4; // 시작 페이지
         this.prev = start > 1; // 이전 링크 표시 여부
         this.end = totalPage > tmpEnd ? tmpEnd : totalPage; // 진짜 마지막 페이지
         this.next = totalPage > tmpEnd; // 다음 링크 표시 여부
 
         // 화면에 표시되는 페이지 번호들을 List<>로 생성
         pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-
     }
 
 }

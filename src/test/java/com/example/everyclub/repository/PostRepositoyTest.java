@@ -50,7 +50,6 @@ public class PostRepositoyTest {
     public void testGetPosts() {
 
         Pageable pageable = PageRequest.of(0, 10, Sort.by("pno").descending());
-        Team team = Team.builder().tno(1L).build();
 
         Page<Object[]> result = postRepository.getPosts(pageable, 1L);
         System.out.println("_________________________________");
@@ -62,7 +61,6 @@ public class PostRepositoyTest {
             System.out.println(post.getTitle());
             System.out.println(user.getEmail());
             System.out.println(rplCnt);
-//            System.out.println(obj.toString());
             System.out.println("______________________");
         }
 

@@ -28,7 +28,7 @@ public class SheduleController {
 
         ScheduleDTO scheduleDTO = mkDTO(title, sno, tno, content, date);
 
-        scheduleService.update(scheduleDTO);
+        scheduleService.upload(scheduleDTO);
 
         return "redirect:/club/team/" + scheduleDTO.getTno();
     }

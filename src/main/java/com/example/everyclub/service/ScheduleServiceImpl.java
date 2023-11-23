@@ -22,11 +22,12 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public List<ScheduleDTO> getScheduleList(TeamDTO teamDTO) {
 
-        Team team = Team.builder().tno(teamDTO.getTno()).build();
+//        Team team = Team.builder().tno(teamDTO.getTno()).build();
 
-        List<Object> result = scheduleRepository.getScheduleByTeam(team);
+//        List<Object> result = scheduleRepository.getScheduleByTeam(teamDTO.getTno());
 
-        return result.stream().map(x -> entityToDTO((Schedule) x)).collect(Collectors.toList());
+//        return result.stream().map(x -> entityToDTO((Schedule) x)).collect(Collectors.toList());
+        return  null;
     }
 
     @Override
@@ -34,12 +35,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         scheduleRepository.deleteById(sno);
 
-    }
-
-    @Override
-    public void update(ScheduleDTO scheduleDTO) {
-        Schedule schedule = dtoToEntity(scheduleDTO);
-        scheduleRepository.save(schedule);
     }
 
     @Override

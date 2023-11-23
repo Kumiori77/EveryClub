@@ -5,6 +5,9 @@ import com.example.everyclub.entity.Team;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,12 +41,11 @@ public class ScheduleRepositoyTest {
     }
 
     @Test
-    public void testGetScheduleByTeam() {// 예 수정
+    public void testGetScheduleByTeam() {
 
-        Team team = Team.builder()
-                .tno(2L).build();
+        Pageable pageable = PageRequest.of(1, 5, Sort.by("sno").descending());
 
-        List<Object> result = scheduleRepository.getScheduleByTeam(team);
+        List<Object> result = scheduleRepository.getScheduleByTeam(pageable, 1L);
 
         for (Object obj : result) {
             System.out.println(obj);
