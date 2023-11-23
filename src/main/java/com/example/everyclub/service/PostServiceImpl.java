@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
         Function<Object[], PostDTO> fn = (en -> entityToDTO((Post) en[0],(User) en[1],(Long) en[2]));
 
         Page<Object[]> result = postRepository.getPosts(
-                pageRequestDTO.getPageable(Sort.by("bno").descending()), tno);
+                pageRequestDTO.getPageable(Sort.by("pno").descending()), tno);
 
         return new PageResultDTO<>(result, fn);
 //        return null;

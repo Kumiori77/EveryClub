@@ -54,16 +54,23 @@
                     <hr>
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <h1>일정표</h1>
-                        <div class="schedule" th:each="schedule:${scheduleList}">
+                        <br>
+                        <button class="btn btn-success" style="width: 150px"
+                                th:if="${isLeader}" onclick="uploadSchedule()">스케줄 입력</button>
+                        <br>
+                        <div class="schedule" th:each="schedule, i:${scheduleList}" th:if="${i.index < 3}">
                             <h5 th:attr="sno=${schedule.sno}, title=${schedule.title},content=${schedule.content},
                                 date=${#temporals.format(schedule.date, 'yyyy/MM/dd')}, tno=${team.tno}"
                                 th:onclick="clickSchedule(this.getAttribute('sno'), this.getAttribute('title'),
                                 this.getAttribute('content'), this.getAttribute('date'), this.getAttribute('tno'))">
                                 [[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h5>
                         </div>
-                        <br>
-                        <button class="btn btn-success" style="width: 200px"
-                                th:if="${isLeader}" onclick="uploadSchedule()">스케줄 입력</button>
+                        <div class="d-flex flex-column align-items-center" th:if="${isJoined && #lists.size(scheduleList) > 3}">
+                            <h1>.&nbsp.&nbsp.</h1><br>
+                            <button type="button" class="btn btn-success" onclick="allSchedules()" >
+                                &nbsp더 보기&nbsp </button>
+                        </div>
+
                         <div style="height:100px"></div>
                     </div>
 
@@ -85,8 +92,7 @@
 
 
         <!--   모달      -->
-
-        <div class="modal" tabindex="-1">
+        <div class="modal modal1" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -118,6 +124,33 @@
         </div>
 
 
+        <!--  스케줄 모달      -->
+        <div class="modal modal2" tabindex="-2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Schedules</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal_schedule">
+                            <div class="schedule" th:each="schedule:${scheduleList}" >
+                                <h5 th:attr="sno=${schedule.sno}, title=${schedule.title},content=${schedule.content},
+                                date=${#temporals.format(schedule.date, 'yyyy/MM/dd')}, tno=${team.tno}"
+                                    th:onclick="clickSchedule(this.getAttribute('sno'), this.getAttribute('title'),
+                                this.getAttribute('content'), this.getAttribute('date'), this.getAttribute('tno'))">
+                                    [[${#temporals.format(schedule.date, 'yyyy/MM/dd')}]] : [[${schedule.title}]]</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </th:block>
 </th:block>
 
@@ -125,6 +158,9 @@
 
     // 스케줄 클릭시 모달창을 띄우는 함수
     function clickSchedule(sno, title, content, date, tno) {
+
+        var modal2 = $(".modal2");
+        modal2.modal("hide");
 
         var isJoined = [[${isJoined}]];
         var isLeader = [[${isLeader}]];
@@ -167,7 +203,7 @@
             btn_upload.style.display = "none";
         }
 
-        var modal = $(".modal");
+        var modal = $(".modal1");
         modal.modal("show");
     }
 
@@ -225,7 +261,13 @@
         var btn_upload = document.getElementById("btn_upload")
         btn_upload.style.display = "block";
 
-        var modal = $(".modal");
+        var modal = $(".modal1");
+        modal.modal("show");
+    }
+
+    // 전체 스케줄 목록 보기 함수
+    function allSchedules() {
+        var modal = $(".modal2");
         modal.modal("show");
     }
 

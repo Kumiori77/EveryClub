@@ -12,5 +12,5 @@ import java.util.List;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     @Query("SELECT s FROM Schedule s WHERE s.team.tno = :tno")
-    List<Object> getScheduleByTeam(Pageable pageable, @Param("tno")Long tno) ;
+    List<Object> getScheduleByTeam(@Param("tno")Long tno) ;
 }

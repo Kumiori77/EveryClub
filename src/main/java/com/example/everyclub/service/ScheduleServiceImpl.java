@@ -22,12 +22,9 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public List<ScheduleDTO> getScheduleList(TeamDTO teamDTO) {
 
-//        Team team = Team.builder().tno(teamDTO.getTno()).build();
+        List<Object> result = scheduleRepository.getScheduleByTeam(teamDTO.getTno());
 
-//        List<Object> result = scheduleRepository.getScheduleByTeam(teamDTO.getTno());
-
-//        return result.stream().map(x -> entityToDTO((Schedule) x)).collect(Collectors.toList());
-        return  null;
+        return result.stream().map(x -> entityToDTO((Schedule) x)).collect(Collectors.toList());
     }
 
     @Override

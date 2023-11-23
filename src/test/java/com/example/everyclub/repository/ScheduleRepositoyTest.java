@@ -43,9 +43,9 @@ public class ScheduleRepositoyTest {
     @Test
     public void testGetScheduleByTeam() {
 
-        Pageable pageable = PageRequest.of(1, 5, Sort.by("sno").descending());
+        Pageable pageable = PageRequest.of(0, 5, Sort.by("sno").descending());
 
-        List<Object> result = scheduleRepository.getScheduleByTeam(pageable, 1L);
+        List<Object> result = scheduleRepository.getScheduleByTeam(1L);
 
         for (Object obj : result) {
             System.out.println(obj);

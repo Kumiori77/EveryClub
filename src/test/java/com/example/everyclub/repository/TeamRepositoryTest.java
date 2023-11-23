@@ -50,8 +50,8 @@ public class TeamRepositoryTest {
 
         List<Object[]> result = teamRepository.getTeamNotJoined(user.getEmail());
 
-        for(Object team[] :  result) {
-            System.out.println(Arrays.toString(team));
+        for(Object team[]: result) {
+            System.out.println(team[0]+" "+team[1]+" "+team[2]+" "+team[3]);
         }
     }
 
