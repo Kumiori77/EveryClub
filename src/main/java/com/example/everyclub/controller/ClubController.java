@@ -1,9 +1,9 @@
 package com.example.everyclub.controller;
 
-import com.example.everyclub.dto.ScheduleDTO;
-import com.example.everyclub.dto.TeamDTO;
-import com.example.everyclub.dto.UserDTO;
+import com.example.everyclub.dto.*;
+import com.example.everyclub.entity.Post;
 import com.example.everyclub.repository.JoinTeamRepository;
+import com.example.everyclub.service.PostService;
 import com.example.everyclub.service.ScheduleService;
 import com.example.everyclub.service.TeamService;
 import com.example.everyclub.service.UserService;
@@ -29,6 +29,7 @@ public class ClubController {
     private final UserService userService;
     private final ScheduleService scheduleService;
     private final JoinTeamRepository joinTeamRepository;
+    private final PostService postService;
 
     @GetMapping("/main")
     public void mainPage(HttpServletRequest httpServletRequest, Model model) {
@@ -66,8 +67,8 @@ public class ClubController {
     }
 
     @GetMapping("/team/{tno}")
-    public String team(@PathVariable("tno") Long tno,
-                       HttpServletRequest httpServletRequest, Model model) {
+    public String team(@PathVariable("tno") Long tno, HttpServletRequest httpServletRequest,
+                       Model model, PageRequestDTO pageRequestDTO) {
 
         // 로그인 여부 확인
         HttpSession session = httpServletRequest.getSession();
@@ -82,6 +83,7 @@ public class ClubController {
         UserDTO userDTO = userService.getUser(user);
         TeamDTO teamDTO = teamService.getTeamByTno(tno);
         List<ScheduleDTO> scheduleList = scheduleService.getScheduleList(teamDTO);
+        PageResultDTO<PostDTO, Object[]> posts = postService.getList(pageRequestDTO, tno);
 
         // 모임 가입 여부
         int isJoined = joinTeamRepository.isJoined(userService.dtoToEntity(userDTO), teamService.dtoToEntity(teamDTO));
@@ -107,6 +109,7 @@ public class ClubController {
         model.addAttribute("user", userDTO);
         model.addAttribute("team", teamDTO);
         model.addAttribute("scheduleList", scheduleList);
+        model.addAttribute("posts", posts);
 
         return "club/team";
     }

@@ -31,7 +31,9 @@ public interface PostService {
                 .tno(post.getTeam().getTno())
                 .writer(user.getEmail())
                 .nickname(user.getNickname())
-                .replyCnt(replyCnt.intValue()).build();
+                .replyCnt(replyCnt.intValue())
+                .reg_date(post.getReg_date())
+                .mod_date(post.getMod_date()).build();
         return postDTO;
     }
 

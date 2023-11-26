@@ -29,6 +29,9 @@ public class PostServiceImpl implements PostService {
 
         Page<Object[]> result = postRepository.getPosts(
                 pageRequestDTO.getPageable(Sort.by("pno").descending()), tno);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(result.getTotalPages());
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
 
         return new PageResultDTO<>(result, fn);
 //        return null;

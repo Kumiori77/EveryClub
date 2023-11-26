@@ -8,12 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "SELECT p, w, count(r) " +
             "FROM Post p LEFT JOIN p.writer w LEFT JOIN Reply r ON r.post = p " +
             "WHERE p.team.tno = :tno GROUP BY p",
-            countQuery = "SELECT COUNT(p) FROM Post p")
+            countQuery = "SELECT COUNT(p) FROM Post p WHERE p.team.tno = :tno")
     Page<Object[]> getPosts(Pageable pageable, @Param("tno") Long tno);
 
 }

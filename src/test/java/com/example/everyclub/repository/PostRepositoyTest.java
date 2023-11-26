@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -49,12 +50,14 @@ public class PostRepositoyTest {
     @Test
     public void testGetPosts() {
 
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("pno").descending());
+        Pageable pageable = PageRequest.of(3, 5, Sort.by("pno").descending());
 
         Page<Object[]> result = postRepository.getPosts(pageable, 1L);
         System.out.println("_________________________________");
+        int i = 0;
 
         for (Object obj[]: result) {
+            i++;
             User user = (User) obj[1];
             Post post = (Post) obj[0];
             Long rplCnt = (Long) obj[2];
@@ -63,6 +66,11 @@ public class PostRepositoyTest {
             System.out.println(rplCnt);
             System.out.println("______________________");
         }
+
+        System.out.println("+++++++++++++");
+        System.out.println(result.getTotalPages());
+        System.out.println("+++++++++++++");
+        System.out.println(i);
 
     }
 

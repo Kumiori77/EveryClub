@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -22,4 +24,6 @@ public class PostDTO {
     private String writer;
     private String nickname;
     private int replyCnt;
+    private LocalDateTime reg_date;
+    private LocalDateTime mod_date;
 }

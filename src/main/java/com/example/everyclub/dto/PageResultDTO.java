@@ -40,6 +40,9 @@ public class PageResultDTO<DTO, EN> {
 
         // 총 페이지수 계산 (전체 페이지 번호 개수 = 테이블의 엔티티 개수)
         totalPage = result.getTotalPages();
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(totalPage);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
 
         // 화면에 표시되는 페이지 리스트 생성
         makePageList(result.getPageable());

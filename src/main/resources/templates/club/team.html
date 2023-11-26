@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <hr><br>
+            <hr>
 
             <div class="row">
                 <div class="col-lg-4">
@@ -80,8 +80,41 @@
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <h1 class="mt-5">게시판</h1>
                     </div>
+                    <br>
+                    <div class="card border-success mb-3" style="max-width: 100%;" th:each="post:${posts.dtoList}">
+                        <a href="#">
+                        <div class="card-header">[[${post.writer}]]</div>
+                        <div class="card-body text-success">
+                            <h5 class="card-title">[[${post.title}]] ... ( [[${post.replyCnt}]] )</h5>
+                            <p class="card-text">[[${#temporals.format(post.reg_date, 'yyyy/MM/dd')}]]</p>
+                        </div></a>
+                    </div>
 
+                    <ul class="pagination justify-content-center align-items-center">
 
+                        <li class="page-item" th:if="${posts.prev}">
+                            <a class="page-link" th:href="@{/club/team/{tno}(tno = ${team.tno}, page=${posts.start-1})}" tabindex="-1">
+<!--                                            type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}"-->
+                               Previous</a>
+                        </li>
+
+                        <li th:class=" 'page-item ' +${posts.page == page ? 'active' : ''} "
+                            th:each="page: ${posts.pageList}">
+                            <a class="page-link" th:href="@{/club/team/{tno}(tno = ${team.tno}, page=${page})}">
+<!--                                            type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">-->
+                                [[${page}]]
+                            </a>
+                        </li>
+
+                        <li class="page-item" th:if="${posts.next}">
+                            <a class="page-link" th:href="@{/club/team/{tno}(tno = ${team.tno}, page=${posts.end+1})}">
+<!--                                    type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">-->
+                                Next</a>
+                        </li>
+
+                    </ul>
+
+                    <div style="height: 60px"></div>
 
                 </div>
             </div>
