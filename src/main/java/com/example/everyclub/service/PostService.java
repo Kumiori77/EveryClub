@@ -38,4 +38,5 @@ public interface PostService {
     }
 
     PageResultDTO<PostDTO, Object[]> getList(PageRequestDTO pageRequestDTO, Long tno);
+    void register(PostDTO postDTO);
 }
