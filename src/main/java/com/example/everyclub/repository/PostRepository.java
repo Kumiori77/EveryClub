@@ -18,5 +18,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             countQuery = "SELECT COUNT(p) FROM Post p WHERE p.team.tno = :tno")
     Page<Object[]> getPosts(Pageable pageable, @Param("tno") Long tno);
 
+    @Query(value = "SELECT p, w, count(r) " +
+    "FROM Post p LEFT JOIN p.writer w LEFT JOIN Reply r on r.post = p " +
+    "WHERE p.pno = :pno GROUP BY p")
+    Object getPostByPno(Long pno);
+
 }
 //WHERE p.team.tno = :tno

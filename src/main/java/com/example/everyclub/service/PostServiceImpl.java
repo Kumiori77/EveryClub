@@ -35,6 +35,20 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void register(PostDTO postDTO) {
-        // 게시물 등록 메소드 작성하기
+
+        Post post = dtoToEntity(postDTO);
+
+        postRepository.save(post);
+
+    }
+
+    @Override
+    public PostDTO getPostByPno(Long pno) {
+
+        Object[] result = (Object[]) postRepository.getPostByPno(pno);
+
+        PostDTO postDTO = entityToDTO((Post) result[0], (User) result[1], (Long) result[2]);
+
+        return postDTO;
     }
 }

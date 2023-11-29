@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -71,6 +72,18 @@ public class PostRepositoyTest {
         System.out.println(result.getTotalPages());
         System.out.println("+++++++++++++");
         System.out.println(i);
+
+    }
+
+    @Test
+    public void testGetPostByPno() {
+
+        Object result = postRepository.getPostByPno(100L);
+
+        Object[] arr = (Object[])result;
+
+        System.out.println("__________________");
+        System.out.println(Arrays.toString(arr));
 
     }
 
