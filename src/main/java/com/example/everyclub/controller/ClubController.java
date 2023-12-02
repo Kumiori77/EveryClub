@@ -3,10 +3,7 @@ package com.example.everyclub.controller;
 import com.example.everyclub.dto.*;
 import com.example.everyclub.entity.Post;
 import com.example.everyclub.repository.JoinTeamRepository;
-import com.example.everyclub.service.PostService;
-import com.example.everyclub.service.ScheduleService;
-import com.example.everyclub.service.TeamService;
-import com.example.everyclub.service.UserService;
+import com.example.everyclub.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +28,7 @@ public class ClubController {
     private final ScheduleService scheduleService;
     private final JoinTeamRepository joinTeamRepository;
     private final PostService postService;
+    private final ReplyService replyService;
 
     @GetMapping("/main")
     public void mainPage(HttpServletRequest httpServletRequest, Model model) {
@@ -164,12 +162,15 @@ public class ClubController {
         UserDTO userDTO = userService.getUser(user);
         TeamDTO teamDTO = teamService.getTeamByTno(tno);
         PostDTO postDTO = postService.getPostByPno(pno);
+        List<ReplyDTO> replyDTOList = replyService.getReplyList(pno);
+        postDTO.setReplyCnt(replyDTOList.size());
 
 
         // 모델에 메시지 담기
         model.addAttribute("user", userDTO);
         model.addAttribute("team", teamDTO);
         model.addAttribute("post", postDTO);
+        model.addAttribute("replyList", replyDTOList);
 
         return "club/read";
     }

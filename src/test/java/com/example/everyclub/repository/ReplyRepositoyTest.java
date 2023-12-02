@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -39,6 +40,19 @@ public class ReplyRepositoyTest {
 
             replyRepository.save(reply);
         });
+
+    }
+
+    @Test
+    public void testGetRepliesByPno(){
+
+        List<Object> result = replyRepository.getRepliesByPno(100L);
+
+        System.out.println(result.size());
+
+        for (Object obj : result) {
+            System.out.println(obj);
+        }
 
     }
 

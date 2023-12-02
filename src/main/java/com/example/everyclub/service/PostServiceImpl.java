@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
 
         Object[] result = (Object[]) postRepository.getPostByPno(pno);
 
-        PostDTO postDTO = entityToDTO((Post) result[0], (User) result[1], (Long) result[2]);
+        PostDTO postDTO = entityToDTO((Post) result[0], (User) result[1], 0L);
 
         return postDTO;
     }

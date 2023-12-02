@@ -48,13 +48,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Writer</label>
+                            <input type="text" class="form-control" name="nickname" th:value="${user.nickname}" readonly>
+                        </div>
+
+                        <div class="form-group">
                             <label>Content</label>
                             <textarea class="form-control" rows="10" name="content" placeholder="Enter Content"></textarea>
                         </div>
 
                         <input type="hidden" name="writer" th:value="${user.email}">
                         <input type="hidden" name="tno" th:value="${team.tno}">
-                        <input type="hidden" name="nickname" th:value="${user.nickname}">
+
                         <br>
                         <div class="d-flex flex-row justify-content-end align-items-center">
                         <Button type="submit" class="btn btn-success" style="width: 100px">등록</Button>
@@ -65,10 +70,6 @@
             </div>
 
         </div>
-
-        <!--게시물 등록 조회 수정 삭제 구현하기-->
-        <!--     댓글 등록 수정 삭제 구현하기   -->
-
 
     </th:block>
 </th:block>
