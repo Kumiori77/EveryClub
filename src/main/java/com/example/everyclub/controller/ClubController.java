@@ -165,7 +165,6 @@ public class ClubController {
         List<ReplyDTO> replyDTOList = replyService.getReplyList(pno);
         postDTO.setReplyCnt(replyDTOList.size());
 
-
         // 모델에 메시지 담기
         model.addAttribute("user", userDTO);
         model.addAttribute("team", teamDTO);
