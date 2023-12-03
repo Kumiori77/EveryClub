@@ -11,7 +11,7 @@
                     <div class="d-flex justify-content-end">
                         <!--       가입 버튼       -->
                         <div th:if="!${isJoined}" class="d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-success" onclick="checkUser()">
+                            <button type="button" class="btn btn-success" onclick="submitTeam()">
                                 &nbsp가입&nbsp</button>
                         </div>
                         <!--     설정 버튼      -->
@@ -132,10 +132,6 @@
 
         </div>
 
-<!--게시물 등록 조회 수정 삭제 구현하기-->
-<!--     댓글 등록 수정 삭제 구현하기   -->
-
-
         <!--   모달      -->
         <div class="modal modal1" tabindex="-1">
             <div class="modal-dialog">
@@ -195,11 +191,20 @@
             </div>
         </div>
 
-
-    </th:block>
-</th:block>
-
 <script>
+
+    function submitTeam(){
+        var result = confirm("이 팀에 가입하시겠습니까?");
+        if (result) {
+            // OK 버튼을 클릭한 경우에 대한 처리
+            alert("가입되었습니다.");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/club/submit?tno="+[[${team.tno}]]+"&user="+'[[${user.email}]]', true);
+        } else {
+            // 취소 버튼을 클릭한 경우에 대한 처리
+            alert("취소되었습니다.");
+        }
+    }
 
     // 스케줄 클릭시 모달창을 띄우는 함수
     function clickSchedule(sno, title, content, date, tno) {
@@ -317,5 +322,8 @@
     }
 
 </script>
+
+    </th:block>
+</th:block>
 
 </html>

@@ -76,7 +76,8 @@
           <br>
           <div class="d-flex flex-row justify-content-end align-items-center">
             <a class="btn btn-danger" onclick="removePost()" th:if="${post.writer == user.email}"
-               th:href="@{/club/removePost/{tno}(tno=${team.tno}, pno=${post.pno}, page=${pageRequest.page})}">삭제</a>
+               >삭제</a>
+<!--            th:href="@{/club/removePost/{tno}(tno=${team.tno}, pno=${post.pno}, page=${pageRequest.page})}"-->
             &nbsp;&nbsp;&nbsp;
             <a class="btn btn-warning" th:if="${post.writer == user.email}"
             th:href="@{/club/modifyPost/{tno}(tno=${team.tno}, pno=${post.pno}, page=${pageRequest.page})}">수정</a>
@@ -150,6 +151,16 @@
         if (result) {
           // OK 버튼을 클릭한 경우에 대한 처리
           alert("삭제되었습니다.");
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "/club/removePost/"+[[${team.tno}]]+"?pno="+[[${post.pno}]]+"&page="+[[${pageRequest.page}]], true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              var response = xhr.responseText;
+              // 리다이렉트를 수행합니다.
+              window.location.href = "/club/team/"+[[${team.tno}]]+"?page="+[[${pageRequest.page}]];
+            }
+          };
+          xhr.send();
         } else {
           // 취소 버튼을 클릭한 경우에 대한 처리
           alert("취소되었습니다.");
