@@ -6,12 +6,13 @@ import com.example.everyclub.dto.PostDTO;
 import com.example.everyclub.entity.Post;
 import com.example.everyclub.entity.User;
 import com.example.everyclub.repository.PostRepository;
+import com.example.everyclub.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.Function;
 
@@ -21,6 +22,7 @@ import java.util.function.Function;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final ReplyRepository replyRepository;
 
     @Override
     public PageResultDTO<PostDTO, Object[]> getList(PageRequestDTO pageRequestDTO, Long tno) {
@@ -50,5 +52,12 @@ public class PostServiceImpl implements PostService {
         PostDTO postDTO = entityToDTO((Post) result[0], (User) result[1], 0L);
 
         return postDTO;
+    }
+
+    @Transactional
+    @Override
+    public void remove(Long pno) {
+        replyRepository.deleteByPno(pno);
+        postRepository.deleteById(pno);
     }
 }

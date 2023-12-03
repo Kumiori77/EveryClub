@@ -75,7 +75,14 @@
 
           <br>
           <div class="d-flex flex-row justify-content-end align-items-center">
-            <Button type="submit" class="btn btn-success" style="width: 100px">등록</Button>
+            <a class="btn btn-danger" onclick="removePost()" th:if="${post.writer == user.email}"
+               th:href="@{/club/removePost/{tno}(tno=${team.tno}, pno=${post.pno}, page=${pageRequest.page})}">삭제</a>
+            &nbsp;&nbsp;&nbsp;
+            <a class="btn btn-warning" th:if="${post.writer == user.email}"
+            th:href="@{/club/modifyPost/{tno}(tno=${team.tno}, pno=${post.pno}, page=${pageRequest.page})}">수정</a>
+            &nbsp;&nbsp;&nbsp;
+            <a  class="btn btn-success"
+                th:href="@{/club/team/{tno}(tno=${team.tno}, page=${pageRequest.page})}">목록</a>
           </div>
 
           <div style="height: 70px"></div>
@@ -137,6 +144,17 @@
 
 
     <script th:inline="javascript">
+
+      function removePost(){
+        var result = confirm("정말로 삭제하시겠습니까?");
+        if (result) {
+          // OK 버튼을 클릭한 경우에 대한 처리
+          alert("삭제되었습니다.");
+        } else {
+          // 취소 버튼을 클릭한 경우에 대한 처리
+          alert("취소되었습니다.");
+        }
+      }
 
       $(document).ready(function() {
 

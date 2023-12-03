@@ -42,4 +42,6 @@ public interface PostService {
     void register(PostDTO postDTO);
 
     PostDTO getPostByPno(Long pno);
+
+    void remove(Long pno);
 }

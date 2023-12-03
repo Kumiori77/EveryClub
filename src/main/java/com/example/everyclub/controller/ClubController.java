@@ -147,7 +147,7 @@ public class ClubController {
 
     @GetMapping("/read/{tno}")
     public String read(@PathVariable("tno") Long tno, Long pno, HttpServletRequest httpServletRequest,
-                           Model model) {
+                           PageRequestDTO pageRequestDTO, Model model) {
 
         // 로그인 여부 확인
         HttpSession session = httpServletRequest.getSession();
@@ -170,8 +170,51 @@ public class ClubController {
         model.addAttribute("team", teamDTO);
         model.addAttribute("post", postDTO);
         model.addAttribute("replyList", replyDTOList);
+        model.addAttribute("pageRequest", pageRequestDTO);
 
         return "club/read";
+    }
+
+    @GetMapping("/removePost/{tno}")
+    public String removePost(@PathVariable("tno") Long tno, Long pno, PageRequestDTO pageRequestDTO) {
+        postService.remove(pno);
+
+        return "redirect:/club/team/" + tno + "?page=" + pageRequestDTO.getPage();
+    }
+
+    @GetMapping("/modifyPost/{tno}")
+    public String modifyPost(@PathVariable("tno") Long tno, Long pno, HttpServletRequest httpServletRequest,
+                       PageRequestDTO pageRequestDTO, Model model) {
+
+        // 로그인 여부 확인
+        HttpSession session = httpServletRequest.getSession();
+        String user = (String) session.getAttribute("user");
+
+        if (user == null) {
+            // 메인페이지로 이동해서 로그인 하지 않으면 해당 페이지에 접근하지 못하게 하기
+            return "redirect:/club/main";
+        }
+
+        // 전달할 데이터
+        UserDTO userDTO = userService.getUser(user);
+        TeamDTO teamDTO = teamService.getTeamByTno(tno);
+        PostDTO postDTO = postService.getPostByPno(pno);
+
+        // 모델에 메시지 담기
+        model.addAttribute("user", userDTO);
+        model.addAttribute("team", teamDTO);
+        model.addAttribute("post", postDTO);
+        model.addAttribute("pageRequest", pageRequestDTO);
+
+        return "club/modifyPost";
+    }
+
+    @PostMapping("/modifyPost/{tno}")
+    public String modifyPost(@PathVariable("tno") Long tno, PostDTO postDTO, PageRequestDTO pageRequestDTO) {
+
+        postService.register(postDTO);
+
+        return "redirect:/club/read/"+tno+"?pno="+postDTO.getPno()+"&page="+pageRequestDTO.getPage();
     }
 
 }
