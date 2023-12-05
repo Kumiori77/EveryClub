@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<th:block th:replace="~{/layout/base :: setContent(~{this :: content})}">
+  <th:block th:fragment="content">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="d-flex justify-content-end">
+
+            <b style="font-size: larger">[[ ${user.nickname} ]]</b>
+            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="/users/logout" class="btn btn-primary mt-2">Log out</a>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="d-flex justify-content-center">
+
+            <h1>[[ ${team.teamName} ]]</h1>
+
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <h2 class="mt-12">설 정</h2>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <!--    리더인 경우      -->
+          <div th:if="${isLeader}">
+            <form th:action="@{/club/setting/{tno}(tno=${team.tno}, isLeader=${isLeader}, page=${page})}" th:method="post">
+              <div class="form-group">
+                <label>팀 이름</label>
+                <input type="text" class="form-control" name="teamName" th:value="${team.teamName}">
+              </div>
+
+              <div class="form-group">
+                <label>팀 소개글</label>
+                <textarea class="form-control" rows="5" name="description">
+                  [[ ${team.description} ]]
+                </textarea>
+              </div>
+
+              <input type="hidden" name="tno" th:value="${team.tno}">
+              <input type="hidden" name="likeTeam" th:value="${team.likeTeam}">
+
+              <br>
+              <div class="d-flex flex-row justify-content-end align-items-center">
+                <Button type="submit" class="btn btn-success" style="width: 100px">변경</Button>
+              </div>
+
+            </form>
+
+            <div style="height: 150px"></div>
+
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button type="button" class="btn btn-secondary" onclick="showUsers()">
+                <h1>팀 멤버 보기</h1></button>
+            <br><br><br>
+              <button type="button" class="btn btn-danger" onclick="removeTeam()">
+                <h1>팀 삭제</h1></button>
+            </div>
+            <div style="height: 100px"></div>
+
+          </div>
+
+          <!--    멤버인 경우      -->
+          <div th:unless="${isLeader}">
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!--  가입한 유저 표시 모달  -->
+    <div class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">가입한 멤버</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="modal_schedule">
+              <div class="schedule" th:each="user:${joinedUsers}" >
+                <h5>
+                  [[${user.nickname}]]
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script th:inline="javascript">
+
+      function showUsers() {
+        var modal = $(".modal");
+        modal.modal("show");
+      }
+
+      function removeTeam(){
+        var result = confirm("정말로 삭제하시겠습니까?");
+        if (result) {
+          // OK 버튼을 클릭한 경우에 대한 처리
+
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/club/removeTeam/"+[[${team.tno}]], true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              var response = xhr.responseText;
+              // 리다이렉트를 수행합니다.
+              window.location.href = "/club/main";
+            }
+          };
+          xhr.send();
+          alert("삭제되었습니다.");
+        } else {
+          // 취소 버튼을 클릭한 경우에 대한 처리
+          alert("취소되었습니다.");
+        }
+      }
+
+    </script>
+
+  </th:block>
+</th:block>
+
+
+</html>

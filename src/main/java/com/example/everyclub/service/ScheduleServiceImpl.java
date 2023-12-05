@@ -8,6 +8,7 @@ import com.example.everyclub.repository.ScheduleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,5 +39,11 @@ public class ScheduleServiceImpl implements ScheduleService{
     public void upload(ScheduleDTO scheduleDTO) {
         Schedule schedule = dtoToEntity(scheduleDTO);
         scheduleRepository.save(schedule);
+    }
+
+    @Transactional
+    @Override
+    public void removeByTno(Long tno) {
+        scheduleRepository.deleteByTno(tno);
     }
 }

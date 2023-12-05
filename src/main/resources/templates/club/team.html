@@ -15,9 +15,10 @@
                                 &nbsp가입&nbsp</button>
                         </div>
                         <!--     설정 버튼      -->
-                        <div th:if="${isLeader}" class="d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-success" onclick="checkUser()">
-                                &nbsp설정&nbsp</button>
+                        <div th:if="${isJoined}" class="d-flex justify-content-center align-items-center">
+                            <a class="btn btn-success"
+                               th:href="@{/club/setting/{tno}(tno=${team.tno}, isLeader=${isLeader}, page=${posts.page})}">
+                                &nbsp설정&nbsp </a>
                         </div>
 
                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -199,7 +200,14 @@
             // OK 버튼을 클릭한 경우에 대한 처리
             alert("가입되었습니다.");
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/club/submit?tno="+[[${team.tno}]]+"&user="+'[[${user.email}]]', true);
+            xhr.open("POST", "/club/submit?tno="+[[${team.tno}]]+"&email="+[[${user.email}]], true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText;
+                    location.reload();
+                }
+            };
+            xhr.send();
         } else {
             // 취소 버튼을 클릭한 경우에 대한 처리
             alert("취소되었습니다.");

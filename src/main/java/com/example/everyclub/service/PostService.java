@@ -44,4 +44,6 @@ public interface PostService {
     PostDTO getPostByPno(Long pno);
 
     void remove(Long pno);
+
+    void removeByTno(Long tno);
 }

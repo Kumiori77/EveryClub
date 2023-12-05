@@ -8,6 +8,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Log4j2
 public class UserServiceImpl implements UserService {
@@ -90,5 +93,14 @@ public class UserServiceImpl implements UserService {
         User entity = dtoToEntity(userDTO);
 
         userRepository.save(entity);
+    }
+
+    // 가입한 유저 목록 받아오기
+    @Override
+    public List<UserDTO> getUserList(long tno) {
+
+        List<Object> result = userRepository.getJoinedUsers(tno);
+
+        return result.stream().map(x -> entityToDTO((User) x)).collect(Collectors.toList());
     }
 }

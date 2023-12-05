@@ -3,6 +3,8 @@ package com.example.everyclub.service;
 import com.example.everyclub.dto.UserDTO;
 import com.example.everyclub.entity.User;
 
+import java.util.List;
+
 public interface UserService {
 
     default User dtoToEntity(UserDTO userDTO) {
@@ -39,5 +41,6 @@ public interface UserService {
     // 회원가입 메소드
     void signup(UserDTO userDTO);
 
+    List<UserDTO> getUserList(long tno);
 
 }

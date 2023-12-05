@@ -56,4 +56,15 @@ public class ReplyRepositoyTest {
 
     }
 
+    @Test
+    public void testdeleteByTno() {
+        replyRepository.deleteByTno(10L);
+
+//        List<Object> result = replyRepository.deleteByTno(10L);
+//
+//        for (Object obj: result) {
+//            System.out.println(obj);
+//        }
+    }
+
 }

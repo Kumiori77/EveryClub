@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -85,6 +86,13 @@ public class PostRepositoyTest {
         System.out.println("__________________");
         System.out.println(Arrays.toString(arr));
 
+    }
+
+    @Transactional
+    @Commit
+    @Test
+    public void testRemoveBytno(){
+        postRepository.removeByTno(10L);
     }
 
 }

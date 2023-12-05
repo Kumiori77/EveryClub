@@ -7,6 +7,7 @@ import com.example.everyclub.repository.TeamRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,5 +77,16 @@ public class TeamServiceImpl implements TeamService{
         Optional<Team> team = teamRepository.findById(tno);
 
         return entityToDTO(team.get());
+    }
+
+    @Override
+    public void mkTeam(TeamDTO teamDTO) {
+        teamRepository.save(dtoToEntity(teamDTO));
+    }
+
+    @Override
+    @Transactional
+    public void removeByTno(Long tno) {
+        teamRepository.deleteById(tno);
     }
 }

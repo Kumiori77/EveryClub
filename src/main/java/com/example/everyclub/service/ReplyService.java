@@ -43,4 +43,6 @@ public interface ReplyService {
 
     void remove (Long rno);
 
+    void removeByTno(Long tno);
+
 }

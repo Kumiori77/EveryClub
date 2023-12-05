@@ -60,4 +60,10 @@ public class PostServiceImpl implements PostService {
         replyRepository.deleteByPno(pno);
         postRepository.deleteById(pno);
     }
+
+    @Override
+    @Transactional
+    public void removeByTno(Long tno) {
+        postRepository.removeByTno(tno);
+    }
 }

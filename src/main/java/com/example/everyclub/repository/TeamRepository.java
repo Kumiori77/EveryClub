@@ -20,4 +20,5 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     // 모든 모임 리스트 별점 순 정렬
     @Query("SELECT t FROM Team t ORDER BY t.likeTeam DESC")
     List<Object> getAllTeams();
+
 }

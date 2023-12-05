@@ -4,6 +4,7 @@ import com.example.everyclub.entity.JoinTeam;
 import com.example.everyclub.entity.Team;
 import com.example.everyclub.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -21,6 +22,10 @@ public interface JoinTeamRepository extends JpaRepository<JoinTeam, Long> {
 
     @Query("SELECT j.grade FROM JoinTeam j WHERE j.user = :user AND j.team = :team")
     int isLeader(@Param("user")User user, @Param("team")Team team);
+
+    @Modifying
+    @Query("DELETE FROM JoinTeam j WHERE j.team.tno=:tno")
+    void deleteByTno(@Param("tno") Long tno);
 
 
 }

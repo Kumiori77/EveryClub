@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -46,4 +47,14 @@ public class UserRepositoryTest {
         System.out.println(user.getNickname());
 
     }
+
+    @Test
+    public void testgetJoinedUsers() {
+        List<Object> result = userRepository.getJoinedUsers(6L);
+
+        for (Object obj: result) {
+            System.out.println(obj);
+        }
+    }
+
 }

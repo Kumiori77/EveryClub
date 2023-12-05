@@ -6,6 +6,7 @@ import com.example.everyclub.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,5 +40,11 @@ public class ReplyServiceImpl implements ReplyService{
     @Override
     public void remove(Long rno) {
         replyRepository.deleteById(rno);
+    }
+
+    @Transactional
+    @Override
+    public void removeByTno(Long tno) {
+        replyRepository.deleteByTno(tno);
     }
 }

@@ -37,4 +37,9 @@ public interface TeamService {
     List<TeamDTO> getSRecommendTeamsForAnyone();
 
     TeamDTO getTeamByTno(Long tno);
+
+    // 팀 정보 업데이트
+    void mkTeam(TeamDTO teamDTO);
+
+    void removeByTno(Long tno);
 }

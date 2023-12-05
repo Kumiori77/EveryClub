@@ -1,7 +1,10 @@
 package com.example.everyclub.controller;
 
 import com.example.everyclub.dto.*;
+import com.example.everyclub.entity.JoinTeam;
 import com.example.everyclub.entity.Post;
+import com.example.everyclub.entity.Team;
+import com.example.everyclub.entity.User;
 import com.example.everyclub.repository.JoinTeamRepository;
 import com.example.everyclub.service.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -215,6 +219,77 @@ public class ClubController {
         postService.register(postDTO);
 
         return "redirect:/club/read/"+tno+"?pno="+postDTO.getPno()+"&page="+pageRequestDTO.getPage();
+    }
+
+    // 모임 가입
+    @PostMapping("/submit")
+    public String submit(Long tno, String email){
+
+        System.out.println(tno);
+        System.out.println(email);
+        Team team = Team.builder().tno(tno).build();
+        User user = User.builder().email(email).build();
+
+        JoinTeam joinTeam = JoinTeam.builder()
+                .grade(0)
+                .team(team)
+                .user(user).build();
+
+        joinTeamRepository.save(joinTeam);
+
+        return "redirect:/club/team/"+tno;
+    }
+
+    // 팀 세팅
+    @GetMapping("/setting/{tno}")
+    public String setting(@PathVariable("tno")Long tno, Boolean isLeader, PageRequestDTO pageRequestDTO,
+                          HttpServletRequest httpServletRequest, Model model) {
+
+        // 로그인 여부 확인
+        HttpSession session = httpServletRequest.getSession();
+        String user = (String) session.getAttribute("user");
+
+        if (user == null) {
+            // 메인페이지로 이동해서 로그인 하지 않으면 해당 페이지에 접근하지 못하게 하기
+            return "redirect:/club/main";
+        }
+
+        // 전달할 데이터
+        UserDTO userDTO = userService.getUser(user);
+        TeamDTO teamDTO = teamService.getTeamByTno(tno);
+        List<UserDTO> joinedUsers = userService.getUserList(tno);
+
+        model.addAttribute("user", userDTO);
+        model.addAttribute("team", teamDTO);
+        model.addAttribute("joinedUsers", joinedUsers);
+        model.addAttribute("isLeader", isLeader);
+        model.addAttribute("page", pageRequestDTO.getPage());
+
+        return "club/setting";
+    }
+
+    @PostMapping("/setting/{tno}")
+    public String setting(@PathVariable("tno") Long tno, TeamDTO teamDTO,
+                          boolean isLeader, PageRequestDTO pageRequestDTO) {
+
+        System.out.println(teamDTO.getTeamName());
+
+        teamService.mkTeam(teamDTO);
+
+        return "redirect:/club/setting/"+tno+"?isLeader="+isLeader+"&page="+pageRequestDTO.getPage();
+    }
+
+    @PostMapping("/removeTeam/{tno}")
+    @Transactional
+    public String removeTeam(@PathVariable("tno")Long tno){
+
+        replyService.removeByTno(tno);
+        postService.removeByTno(tno);
+        scheduleService.removeByTno(tno);
+        joinTeamRepository.deleteByTno(tno);
+        teamService.removeByTno(tno);
+
+        return "redirect:/club/main";
     }
 
 }
