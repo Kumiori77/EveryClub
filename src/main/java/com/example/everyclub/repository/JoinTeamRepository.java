@@ -27,5 +27,9 @@ public interface JoinTeamRepository extends JpaRepository<JoinTeam, Long> {
     @Query("DELETE FROM JoinTeam j WHERE j.team.tno=:tno")
     void deleteByTno(@Param("tno") Long tno);
 
+    @Modifying
+    @Query("DELETE FROM JoinTeam j WHERE j.team.tno=:tno AND j.user.email=:email")
+    void deleteByTnoEmail(@Param("tno") Long tno, @Param("email") String email);
+
 
 }

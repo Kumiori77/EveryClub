@@ -31,13 +31,16 @@
 
             <br>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="d-flex justify-content-center">
-
-                        <h1>[[ ${team.teamName} ]]</h1>
-
-                    </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="text-center">
+                    <h1>[[ ${team.teamName} ]]</h1>
+                </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="text-center">
+                    <button type="button" class="btn btn-link btn-likeTeam">
+                    <img src="/img/like.png" style="height: 30px;">
+                    </button>
+                    <div class="likeTeam">[[ ${team.likeTeam} ]]</div>
                 </div>
             </div>
 
@@ -328,6 +331,50 @@
         var modal = $(".modal2");
         modal.modal("show");
     }
+
+    // 팀 좋아요 처리하기
+    $(document).ready(function() {
+
+        function loadLikeTeam(){
+            var liketeam = $(".likeTeam");
+
+            $.getJSON("/likeTeam/" + [[${team.tno}]], function (likeTeam){
+                liketeam.html(likeTeam);
+            });
+        }
+
+        $(".btn-likeTeam").click(function () {
+
+            let is_joined = [[${isJoined}]];
+            if (!is_joined){
+                return;
+            }
+
+            var teamDTO = {
+                tno: [[${team.tno}]],
+                teamName: [[${team.teamName}]],
+                description: [[${team.description}]],
+                likeTeam: [[${team.likeTeam}]]
+            }
+
+            // JSON 포맷으로 변경해서 전송
+            $.ajax({
+                url: "/likeTeam/",
+                method: "post",
+                data: JSON.stringify(teamDTO),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                    loadLikeTeam(); // 좋아요 갱신
+                }
+            });
+        });
+
+
+
+    });
+
 
 </script>
 

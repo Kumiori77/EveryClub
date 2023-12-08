@@ -66,4 +66,9 @@ public class PostServiceImpl implements PostService {
     public void removeByTno(Long tno) {
         postRepository.removeByTno(tno);
     }
+
+    @Override
+    public void removeByTnoWriter(Long tno, String email) {
+        postRepository.deleteByTnoWriter(tno, email);
+    }
 }

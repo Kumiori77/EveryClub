@@ -225,8 +225,6 @@ public class ClubController {
     @PostMapping("/submit")
     public String submit(Long tno, String email){
 
-        System.out.println(tno);
-        System.out.println(email);
         Team team = Team.builder().tno(tno).build();
         User user = User.builder().email(email).build();
 
@@ -239,6 +237,19 @@ public class ClubController {
 
         return "redirect:/club/team/"+tno;
     }
+
+    // 모임 탈퇴
+    @PostMapping("/withDraw")
+    @Transactional
+    public String withDraw(Long tno, String email){
+
+        replyService.removeByTnoReplyer(tno, email);
+        postService.removeByTnoWriter(tno, email);
+        joinTeamRepository.deleteByTnoEmail(tno, email);
+
+        return "redirect:/club/team/"+tno;
+    }
+
 
     // 팀 세팅
     @GetMapping("/setting/{tno}")

@@ -21,4 +21,8 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     @Query("SELECT t FROM Team t ORDER BY t.likeTeam DESC")
     List<Object> getAllTeams();
 
+    @Query("SELECT t.likeTeam FROM Team t WHERE t.tno = :tno")
+    Object getLikeTeamByTno(Long tno);
+    // 해당 팀의 좋아요 수 반환하는 메소드 작성
+
 }

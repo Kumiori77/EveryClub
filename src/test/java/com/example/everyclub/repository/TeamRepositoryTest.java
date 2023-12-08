@@ -64,4 +64,11 @@ public class TeamRepositoryTest {
 
     }
 
+    @Test
+    public void testgetLikeTeamByTno() {
+        Long like = (Long) teamRepository.getLikeTeamByTno(8L);
+
+        System.out.println(like);
+    }
+
 }

@@ -45,4 +45,6 @@ public interface ReplyService {
 
     void removeByTno(Long tno);
 
+    void removeByTnoReplyer(Long tno, String email);
+
 }

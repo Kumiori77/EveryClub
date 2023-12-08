@@ -81,7 +81,11 @@
 
           <!--    멤버인 경우      -->
           <div th:unless="${isLeader}">
-
+            <div style="height: 100px"></div>
+            <div class="d-flex flex-column justify-content-center align-items-center">
+            <button type="button" class="btn btn-danger" onclick="withDraw()" style="width: 250px">
+              <h1>팀 탈퇴</h1></button>
+            </div>
           </div>
 
         </div>
@@ -142,6 +146,29 @@
           alert("취소되었습니다.");
         }
       }
+
+      function withDraw() {
+        var result = confirm("정말로 탈퇴하시겠습니까?");
+        if (result) {
+          // OK 버튼을 클릭한 경우에 대한 처리
+
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/club/withDraw?tno="+[[${team.tno}]]+"&email="+[[${user.email}]], true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              var response = xhr.responseText;
+              // 리다이렉트를 수행합니다.
+              window.location.href = "/club/team/"+[[${team.tno}]];
+            }
+          };
+          xhr.send();
+          alert("탈퇴되었습니다.");
+        } else {
+          // 취소 버튼을 클릭한 경우에 대한 처리
+          alert("취소되었습니다.");
+        }
+      }
+
 
     </script>
 

@@ -47,4 +47,10 @@ public class ReplyServiceImpl implements ReplyService{
     public void removeByTno(Long tno) {
         replyRepository.deleteByTno(tno);
     }
+
+    @Transactional
+    @Override
+    public void removeByTnoReplyer(Long tno, String email) {
+        replyRepository.deleteByTnoReplyer(tno, email);
+    }
 }

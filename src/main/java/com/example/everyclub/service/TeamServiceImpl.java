@@ -89,4 +89,20 @@ public class TeamServiceImpl implements TeamService{
     public void removeByTno(Long tno) {
         teamRepository.deleteById(tno);
     }
+
+    @Override
+    public Long getLikeTeam(Long tno) {
+        return (Long) teamRepository.getLikeTeamByTno(tno);
+    }
+
+    @Override
+    public Long updateLikeTeam(TeamDTO teamDTO) {
+        teamDTO.setLikeTeam(teamDTO.getLikeTeam()+1L);
+
+        Team team = dtoToEntity(teamDTO);
+
+        teamRepository.save(team);
+
+        return teamDTO.getTno();
+    }
 }

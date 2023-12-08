@@ -42,4 +42,8 @@ public interface TeamService {
     void mkTeam(TeamDTO teamDTO);
 
     void removeByTno(Long tno);
+
+    Long getLikeTeam(Long tno);
+
+    Long updateLikeTeam(TeamDTO teamDTO);
 }

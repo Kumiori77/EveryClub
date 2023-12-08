@@ -22,5 +22,10 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
     "(SELECT p.pno FROM post p WHERE p.team_tno=:tno)", nativeQuery = true)
     void deleteByTno(@Param("tno")Long tno);
 
+    @Modifying
+    @Query(value = "DELETE FROM reply r WHERE r.replyer_email=:email AND r.post_pno IN " +
+            "(SELECT p.pno FROM post p WHERE p.team_tno=:tno)", nativeQuery = true)
+    void deleteByTnoReplyer(@Param("tno")Long tno, @Param("email")String email);
+
 
 }

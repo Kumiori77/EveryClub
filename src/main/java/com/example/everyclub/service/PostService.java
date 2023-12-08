@@ -46,4 +46,8 @@ public interface PostService {
     void remove(Long pno);
 
     void removeByTno(Long tno);
+
+    void removeByTnoWriter(Long tno, String email);
+
+
 }

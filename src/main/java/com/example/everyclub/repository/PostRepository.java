@@ -28,5 +28,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("DELETE FROM Post p WHERE p.team.tno=:tno")
     void removeByTno(@Param("tno") Long tno);
 
+    @Modifying
+    @Query("DELETE FROM Post p WHERE p.team.tno=:tno AND p.writer.email=:email")
+    void deleteByTnoWriter(@Param("tno")Long tno, @Param("email")String email);
+
 }
 //WHERE p.team.tno = :tno
