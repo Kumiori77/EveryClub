@@ -45,15 +45,13 @@
           <div th:if="${isLeader}">
             <form th:action="@{/club/setting/{tno}(tno=${team.tno}, isLeader=${isLeader}, page=${page})}" th:method="post">
               <div class="form-group">
-                <label>팀 이름</label>
+                <label>모임 이름</label>
                 <input type="text" class="form-control" name="teamName" th:value="${team.teamName}">
               </div>
 
               <div class="form-group">
-                <label>팀 소개글</label>
-                <textarea class="form-control" rows="5" name="description">
-                  [[ ${team.description} ]]
-                </textarea>
+                <label>모임 소개글</label>
+                <textarea class="form-control" rows="5" name="description">[[ ${team.description} ]]</textarea>
               </div>
 
               <input type="hidden" name="tno" th:value="${team.tno}">
@@ -70,10 +68,10 @@
 
             <div class="d-flex flex-column justify-content-center align-items-center">
               <button type="button" class="btn btn-secondary" onclick="showUsers()">
-                <h1>팀 멤버 보기</h1></button>
+                <h1>모임 멤버 보기</h1></button>
             <br><br><br>
               <button type="button" class="btn btn-danger" onclick="removeTeam()">
-                <h1>팀 삭제</h1></button>
+                <h1>모임 삭제</h1></button>
             </div>
             <div style="height: 100px"></div>
 
@@ -84,7 +82,7 @@
             <div style="height: 100px"></div>
             <div class="d-flex flex-column justify-content-center align-items-center">
             <button type="button" class="btn btn-danger" onclick="withDraw()" style="width: 250px">
-              <h1>팀 탈퇴</h1></button>
+              <h1>모임 탈퇴</h1></button>
             </div>
           </div>
 

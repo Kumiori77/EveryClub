@@ -105,4 +105,9 @@ public class TeamServiceImpl implements TeamService{
 
         return teamDTO.getTno();
     }
+
+    @Override
+    public Long getTnoByTeamName(String teamName) {
+        return (Long) teamRepository.getTnoByTeamname(teamName);
+    }
 }

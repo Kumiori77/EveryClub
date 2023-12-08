@@ -46,4 +46,6 @@ public interface TeamService {
     Long getLikeTeam(Long tno);
 
     Long updateLikeTeam(TeamDTO teamDTO);
+
+    Long getTnoByTeamName(String teamName);
 }

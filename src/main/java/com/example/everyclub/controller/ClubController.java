@@ -303,4 +303,43 @@ public class ClubController {
         return "redirect:/club/main";
     }
 
+    // 팀 생성
+    @GetMapping("/makeTeam")
+    public String makeTeam(HttpServletRequest httpServletRequest, Model model) {
+
+        // 로그인 여부 확인
+        HttpSession session = httpServletRequest.getSession();
+        String user = (String) session.getAttribute("user");
+
+        if (user == null) {
+            // 메인페이지로 이동해서 로그인 하지 않으면 해당 페이지에 접근하지 못하게 하기
+            return "redirect:/club/main";
+        }
+
+        UserDTO userDTO = userService.getUser(user);
+        model.addAttribute("user", userDTO);
+
+        return "club/makeTeam";
+    }
+
+    @PostMapping("/makeTeam")
+    public String maekTeam(TeamDTO teamDTO, String email) {
+
+        teamDTO.setLikeTeam(0L);
+        teamService.mkTeam(teamDTO);
+
+        // 모임을 생성한 유저를 리더로 등록
+        Team team = Team.builder().tno(teamService.getTnoByTeamName(teamDTO.getTeamName())).build();
+        User user = User.builder().email(email).build();
+
+        JoinTeam joinTeam = JoinTeam.builder()
+                .grade(1)
+                .team(team)
+                .user(user).build();
+
+        joinTeamRepository.save(joinTeam);
+
+        return "redirect:/club/team/" + (Long) teamService.getTnoByTeamName(teamDTO.getTeamName());
+    }
+
 }

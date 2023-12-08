@@ -71,4 +71,13 @@ public class TeamRepositoryTest {
         System.out.println(like);
     }
 
+    @Test
+    public void testGetTnoByTeamName() {
+
+        Long tno = (Long) teamRepository.getTnoByTeamname("Team_1");
+
+        System.out.println(tno);
+
+    }
+
 }
