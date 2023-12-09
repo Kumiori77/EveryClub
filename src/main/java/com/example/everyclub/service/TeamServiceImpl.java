@@ -73,6 +73,14 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
+    public List<TeamDTO> getSearchTeam(String keyword) {
+
+        List<Object> result = teamRepository.getSearchTeam(keyword);
+
+        return result.stream().map(x -> entityToDTO((Team) x)).collect(Collectors.toList());
+    }
+
+    @Override
     public TeamDTO getTeamByTno(Long tno) {
         Optional<Team> team = teamRepository.findById(tno);
 

@@ -80,4 +80,14 @@ public class TeamRepositoryTest {
 
     }
 
+    @Test
+    public void testGetSearchTeam() {
+        List<Object> result = teamRepository.getSearchTeam("This");
+
+        for(Object obj : result){
+            System.out.println(obj);
+        }
+    }
+
+
 }

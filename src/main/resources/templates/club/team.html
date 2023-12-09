@@ -96,7 +96,8 @@
                         <div class="card-header">[[${post.writer}]]</div>
                         <div class="card-body text-success">
 <!--                            <a th:href="@{/club/main}" th:disabled="!${isJoined}">-->
-                            <a th:href="${isJoined} ? '/club/read/'+${team.tno}+'?pno='+${post.pno}+'&page='+${posts.page}">
+                            <a th:href="${isJoined} ? '/club/read/'+${team.tno}+'?pno='+${post.pno}+'&page='+${posts.page}"
+                               class="text-dark">
                                 <h5 class="card-title">[[${post.title}]] ... ( [[${post.replyCnt}]] )</h5></a>
                             <p class="card-text" style="text-align: right;">
                                 [[${#temporals.format(post.reg_date, 'yyyy/MM/dd')}]]</p>

@@ -28,4 +28,7 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     @Query("SELECT t.tno FROM Team t WHERE t.teamName = :teamName")
     Object getTnoByTeamname(@Param("teamName") String teamName);
 
+    @Query("SELECT t FROM Team t WHERE t.teamName LIKE %:keyword% OR t.description LIKE %:keyword%")
+    List<Object> getSearchTeam(@Param("keyword") String keyword);
+
 }

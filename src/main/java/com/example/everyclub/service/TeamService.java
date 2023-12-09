@@ -36,6 +36,9 @@ public interface TeamService {
     // 추천 팀 목록 (비회원)
     List<TeamDTO> getSRecommendTeamsForAnyone();
 
+    // 검색한 팀 목록
+    List<TeamDTO> getSearchTeam(String keyword);
+
     TeamDTO getTeamByTno(Long tno);
 
     // 팀 정보 업데이트

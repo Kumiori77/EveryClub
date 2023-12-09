@@ -342,4 +342,30 @@ public class ClubController {
         return "redirect:/club/team/" + (Long) teamService.getTnoByTeamName(teamDTO.getTeamName());
     }
 
+    // 팀 검색
+    @GetMapping("/searchTeam")
+    public String searchTeam(HttpServletRequest httpServletRequest, String keyword, Model model) {
+
+        // 로그인 여부 확인
+        HttpSession session = httpServletRequest.getSession();
+        String user = (String) session.getAttribute("user");
+
+        if (user == null) {
+            // 메인페이지로 이동해서 로그인 하지 않으면 해당 페이지에 접근하지 못하게 하기
+            return "redirect:/club/main";
+        }
+
+        UserDTO userDTO = userService.getUser(user);
+        model.addAttribute("user", userDTO);
+
+        if (keyword != null) {
+            List<TeamDTO> teams = teamService.getSearchTeam(keyword);
+            model.addAttribute("teams", teams);
+            model.addAttribute("keyword", keyword);
+        }
+
+        return "club/searchTeam";
+    }
+
+
 }
